@@ -59,5 +59,5 @@ async function remove_history(request, response) {
 }
 
 app.listen(3002, () => {
-	console.log(`Example app listening on port ${3002}`)
+	return "okay";
 })
