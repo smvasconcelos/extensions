@@ -40,7 +40,7 @@ async function add_manhwa(request, response) {
 	const title = request.query.url;
 	const email = request.query.email;
 	const key = btoa(email);
-	await manhwaRef.doc(key).set({
+	return await manhwaRef.doc(key).set({
 		title: title,
 		date: new Date().toLocaleDateString("pt-BR").toString(),
 	}).then(() => {
@@ -55,7 +55,7 @@ app.get('/remove_manhwa', cors(), remove_manhwa);
 async function remove_manhwa(request, response) {
 	const email = request.query.email;
 	const key = btoa(email);
-	await manhwaRef.doc(key).delete().then(() => {
+	return await manhwaRef.doc(key).delete().then(() => {
 		response.send(JSON.stringify({ message: "Manhwa deleted successfully", status: 201 }));
 	}).catch(() => {
 		response.send(JSON.stringify({ message: "Error deleting manhwa", status: 500 }));
@@ -67,7 +67,7 @@ async function add_history(request, response) {
 	const title = request.query.url;
 	const email = request.query.email;
 	const key = btoa(email);
-	await historyRef.doc(key).set({
+	return await historyRef.doc(key).set({
 		title: title,
 		date: new Date().toLocaleDateString("pt-BR").toString(),
 	}).then(() => {
@@ -81,10 +81,40 @@ app.get('/remove_history', cors(), remove_history);
 async function remove_history(request, response) {
 	const email = request.query.email;
 	const key = btoa(email);
-	await historyRef.doc(key).delete().then(() => {
+	return await historyRef.doc(key).delete().then(() => {
 		response.send(JSON.stringify({ message: "Manhwa deleted successfully", status: 201 }));
 	}).catch(() => {
 		response.send(JSON.stringify({ message: "Error deleting manhwa", status: 500 }));
+	});
+}
+
+
+app.get('/get_manhwa', cors(), get_manhwa);
+
+async function get_manhwa(request, response) {
+	const email = request.query.email;
+	const key = btoa(email);
+	await manhwaRef.doc(key).get().then((snapshot) => {
+		const data = snapshot.map((item) => {
+			return item.data();
+		});
+		response.send(JSON.stringify({ message: "Manhwa listed successfully", status: 200, data: data }));
+	}).catch(() => {
+		response.send(JSON.stringify({ message: "Error listing manhwa", status: 500 }));
+	});
+}
+app.get('/get_history', cors(), get_history);
+
+async function get_history(request, response) {
+	const email = request.query.email;
+	const key = btoa(email);
+	await historyRef.doc(key).get().then((snapshot) => {
+		const data = snapshot.map((item) => {
+			return item.data();
+		});
+		response.send(JSON.stringify({ message: "Manhwa listed successfully", status: 200, data: data }));
+	}).catch(() => {
+		response.send(JSON.stringify({ message: "Error listing manhwa", status: 500 }));
 	});
 }
 
