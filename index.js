@@ -14,7 +14,7 @@ const fireApp = admin.initializeApp({
 		"client_email": process.env.FIREBASE_client_email,
 	})
 });
-const firestore = admin.firestore(fireApp);
+const firestore = admin.firestore();
 
 const manhwaRef = firestore.collection('manhwa');
 const historyRef = firestore.collection('history');
