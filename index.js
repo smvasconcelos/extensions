@@ -16,8 +16,8 @@ const fireApp = admin.initializeApp({
 });
 const firestore = admin.firestore(fireApp);
 
-// const manhwaRef = firestore.collection('manhwa');
-// const historyRef = firestore.collection('history');
+const manhwaRef = firestore.collection('manhwa');
+const historyRef = firestore.collection('history');
 
 const express = require('express');
 const app = express();
@@ -39,24 +39,53 @@ app.get('/add_manhwa', cors(), add_manhwa);
 async function add_manhwa(request, response) {
 	const title = request.query.url;
 	const email = request.query.email;
-	console.log({ title, email });
-	response.send(JSON.stringify({ title, email }));
+	const key = btoa(email);
+	await manhwaRef.doc(key).set({
+		title: title,
+		date: new Date().toLocaleDateString("pt-BR").toString(),
+	}).then(() => {
+		response.send(JSON.stringify({ message: "Manhwa added successfully", status: 201 }));
+	}).catch(() => {
+		response.send(JSON.stringify({ message: "Error adding manhwa", status: 500 }));
+	});
 }
 
 app.get('/remove_manhwa', cors(), remove_manhwa);
 
 async function remove_manhwa(request, response) {
-	return "remove manhwa"
+	const email = request.query.email;
+	const key = btoa(email);
+	await manhwaRef.doc(key).delete().then(() => {
+		response.send(JSON.stringify({ message: "Manhwa deleted successfully", status: 201 }));
+	}).catch(() => {
+		response.send(JSON.stringify({ message: "Error deleting manhwa", status: 500 }));
+	});
 }
 app.get('/add_history', cors(), add_history);
 
 async function add_history(request, response) {
-	return "add history"
+	const title = request.query.url;
+	const email = request.query.email;
+	const key = btoa(email);
+	await historyRef.doc(key).set({
+		title: title,
+		date: new Date().toLocaleDateString("pt-BR").toString(),
+	}).then(() => {
+		response.send(JSON.stringify({ message: "Manhwa added successfully", status: 201 }));
+	}).catch(() => {
+		response.send(JSON.stringify({ message: "Error deleting manhwa", status: 500 }));
+	});
 }
 app.get('/remove_history', cors(), remove_history);
 
 async function remove_history(request, response) {
-	return "remove_history"
+	const email = request.query.email;
+	const key = btoa(email);
+	await historyRef.doc(key).delete().then(() => {
+		response.send(JSON.stringify({ message: "Manhwa deleted successfully", status: 201 }));
+	}).catch(() => {
+		response.send(JSON.stringify({ message: "Error deleting manhwa", status: 500 }));
+	});
 }
 
 app.listen(process.env.PORT || 3002, () => {
