@@ -1,22 +1,25 @@
 {
-  "name": "otakuheavenserver",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "name": "manhwatrackerserver",
+  "description": "just a server",
+  "version": "2.0.0",
+  "engines": {
+    "node": "16.x",
+		"yarn": "1.x"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/smvasconcelos/otakuheaven.git"
+    "url": "git+https://github.com/smvasconcelos/extensions.git"
   },
   "author": "Samuel Vasconcelos",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/smvasconcelos/otakuheaven/issues"
+    "url": "https://github.com/smvasconcelos/extensions/issues"
   },
-  "homepage": "https://github.com/smvasconcelos/otakuheaven#readme",
+  "homepage": "https://github.com/smvasconcelos/extensions#readme",
   "dependencies": {
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",
