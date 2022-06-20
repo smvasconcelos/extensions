@@ -34,6 +34,22 @@ app.use(function (req, res, next) {
 app.use(express.json())
 app.use(cors({ origin: "*" }))
 
+app.get('/', cors(), test_manhwa);
+
+async function test_manhwa(request, response) {
+	const title = request.query.url;
+	const email = "smvasconcelos11@gmail.com";
+	const key = btoa(email);
+	await manhwaRef.doc(key).get().then((snapshot) => {
+		const data = snapshot.map((item) => {
+			return item.data();
+		});
+		response.send(JSON.stringify({ message: "Manhwa listed successfully", status: 200, data: "data" }));
+	}).catch((e) => {
+		response.send(JSON.stringify({ message: "Error adding manhwa", status: 500, error: e }));
+	});
+}
+
 app.get('/add_manhwa', cors(), add_manhwa);
 
 async function add_manhwa(request, response) {
