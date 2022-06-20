@@ -73,7 +73,7 @@ import './popup.css';
               },
             },
             (response) => {
-              console.log('Current count value passed to contentScript file');
+              // console.log('Current count value passed to contentScript file');
             }
           );
         });
@@ -106,7 +106,7 @@ import './popup.css';
       },
     },
     (response) => {
-      console.log(response.message);
+      // console.log(response.message);
     }
   );
 })();

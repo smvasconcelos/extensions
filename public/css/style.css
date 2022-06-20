@@ -1,0 +1,13 @@
+.action-container{
+	position: fixed;
+	right: 10px;
+	top: 20%;
+	z-index: 999;
+	opacity: .5;
+	transition: opacity 0.2s ease-in-out;
+	cursor: pointer;
+}
+
+.action-container:hover{
+	opacity: 1;
+}
