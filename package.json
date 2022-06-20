@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-	"engines":{
-		"node": "16.15.0"
-	},
+  "engines": {
+    "node": "16.15.0"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index"
@@ -20,7 +20,7 @@
     "url": "https://github.com/smvasconcelos/extensions/issues"
   },
   "homepage": "https://github.com/smvasconcelos/extensions#readme",
-	"dependencies": {
+  "dependencies": {
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",
     "express": "^4.17.2",
@@ -28,8 +28,6 @@
     "firebase-admin": "^11.0.0",
     "firebase-functions": "^3.21.2",
     "node-fetch": "2",
-    "requestify": "^0.2.5",
-    "socket.io": "^4.4.0",
     "uuid": "^8.3.2"
   }
 }
