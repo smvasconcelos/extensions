@@ -58,6 +58,6 @@ async function remove_history(request, response) {
 	return "remove_history"
 }
 
-app.listen(3002, () => {
+app.listen(process.env.PORT || 3002, () => {
 	return "okay";
 })
