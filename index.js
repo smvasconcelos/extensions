@@ -40,9 +40,11 @@ async function add_manhwa(request, response) {
 	const title = request.query.url;
 	const email = request.query.email;
 	const key = btoa(email);
-	await manhwaRef.doc(key).set({
-		title: title,
-		date: new Date().toLocaleDateString("pt-BR").toString(),
+	await manhwaRef.doc(key).update({
+		manhwa: firestore.FieldValue.arrayUnion({
+			title: title,
+			date: new Date().toLocaleDateString("pt-BR").toString(),
+		})
 	}).then(() => {
 		response.send(JSON.stringify({ message: "Manhwa added successfully", status: 201 }));
 	}).catch((e) => {
