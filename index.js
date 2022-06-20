@@ -37,8 +37,9 @@ app.use(cors({ origin: "*" }))
 app.get('/add_manhwa', cors(), add_manhwa);
 
 async function add_manhwa(request, response) {
-	const data = request;
-	console.log({ data });
+	const title = request.query.url;
+	const email = request.query.email;
+	console.log({ title, email });
 	response.send(JSON.stringify({ url: "url" }));
 }
 
