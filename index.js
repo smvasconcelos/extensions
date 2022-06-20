@@ -34,25 +34,6 @@ app.use(function (req, res, next) {
 app.use(express.json())
 app.use(cors({ origin: "*" }))
 
-app.get('/', cors(), test_manhwa);
-
-async function test_manhwa(request, response) {
-	const title = "request.query.url";
-	const email = "request.query.email";
-	const key = btoa(email);
-	console.log("aki")
-	await manhwaRef.doc(key).set({
-		title: title,
-		date: new Date().toLocaleDateString("pt-BR").toString(),
-	}).then(() => {
-		console.log("deu ruim")
-		response.send(JSON.stringify({ message: "Manhwa added successfully", status: 201 }));
-	}).catch((e) => {
-		console.log("deu mt ruim")
-		response.send(JSON.stringify({ message: "Error adding manhwa", status: 500, error: e }));
-	});
-}
-
 app.get('/add_manhwa', cors(), add_manhwa);
 
 async function add_manhwa(request, response) {
