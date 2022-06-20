@@ -40,7 +40,7 @@ async function add_manhwa(request, response) {
 	const title = request.query.url;
 	const email = request.query.email;
 	const key = btoa(email);
-	await manhwaRef.doc(key).update({
+	await manhwaRef.doc(key).set({
 		manhwa: admin.firestore.FieldValue.arrayUnion({
 			title: title,
 			date: new Date().toLocaleDateString("pt-BR").toString(),
@@ -74,7 +74,7 @@ async function add_history(request, response) {
 	const title = request.query.url;
 	const email = request.query.email;
 	const key = btoa(email);
-	await historyRef.doc(key).update({
+	await historyRef.doc(key).set({
 		manhwa: admin.firestore.FieldValue.arrayUnion({
 			title: title,
 			date: new Date().toLocaleDateString("pt-BR").toString(),
