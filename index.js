@@ -1,5 +1,4 @@
 require('dotenv').config();
-const serviceAccountKey = require("./serviceAccountKey.json");
 const admin = require("firebase-admin");
 const fireApp = admin.initializeApp({
 	credential: admin.credential.cert(JSON.parse(process.env.serviceAccountKey))
@@ -9,8 +8,6 @@ const firestore = admin.firestore(fireApp);
 const manhwaRef = firestore.collection('manhwa');
 const historyRef = firestore.collection('history');
 
-if (process.env.ORIGIN === 'http://localhost:3000') {
-}
 const express = require('express');
 const app = express();
 const cors = require('cors');
