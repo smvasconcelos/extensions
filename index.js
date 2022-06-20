@@ -40,7 +40,7 @@ async function add_manhwa(request, response) {
 	const title = request.query.url;
 	const email = request.query.email;
 	console.log({ title, email });
-	response.send(JSON.stringify({ url: "url" }));
+	response.send(JSON.stringify({ title, email }));
 }
 
 app.get('/remove_manhwa', cors(), remove_manhwa);
