@@ -45,8 +45,8 @@ async function add_manhwa(request, response) {
 		date: new Date().toLocaleDateString("pt-BR").toString(),
 	}).then(() => {
 		response.send(JSON.stringify({ message: "Manhwa added successfully", status: 201 }));
-	}).catch(() => {
-		response.send(JSON.stringify({ message: "Error adding manhwa", status: 500 }));
+	}).catch((e) => {
+		response.send(JSON.stringify({ message: "Error adding manhwa", status: 500, error: e }));
 	});
 }
 
@@ -57,8 +57,8 @@ async function remove_manhwa(request, response) {
 	const key = btoa(email);
 	return await manhwaRef.doc(key).delete().then(() => {
 		response.send(JSON.stringify({ message: "Manhwa deleted successfully", status: 201 }));
-	}).catch(() => {
-		response.send(JSON.stringify({ message: "Error deleting manhwa", status: 500 }));
+	}).catch((e) => {
+		response.send(JSON.stringify({ message: "Error deleting manhwa", status: 500, error: e }));
 	});
 }
 app.get('/add_history', cors(), add_history);
@@ -72,8 +72,8 @@ async function add_history(request, response) {
 		date: new Date().toLocaleDateString("pt-BR").toString(),
 	}).then(() => {
 		response.send(JSON.stringify({ message: "Manhwa added successfully", status: 201 }));
-	}).catch(() => {
-		response.send(JSON.stringify({ message: "Error deleting manhwa", status: 500 }));
+	}).catch((e) => {
+		response.send(JSON.stringify({ message: "Error deleting manhwa", status: 500, error: e }));
 	});
 }
 app.get('/remove_history', cors(), remove_history);
@@ -83,13 +83,13 @@ async function remove_history(request, response) {
 	const key = btoa(email);
 	return await historyRef.doc(key).delete().then(() => {
 		response.send(JSON.stringify({ message: "Manhwa deleted successfully", status: 201 }));
-	}).catch(() => {
-		response.send(JSON.stringify({ message: "Error deleting manhwa", status: 500 }));
+	}).catch((e) => {
+		response.send(JSON.stringify({ message: "Error deleting manhwa", status: 500, error: e }));
 	});
 }
 
 
-app.get('/get_manhwa', cors(), get_manhwa);
+app.get('/get_manhwa', cors(), remove_manhwa);
 
 async function get_manhwa(request, response) {
 	const email = request.query.email;
@@ -99,22 +99,22 @@ async function get_manhwa(request, response) {
 			return item.data();
 		});
 		response.send(JSON.stringify({ message: "Manhwa listed successfully", status: 200, data: data }));
-	}).catch(() => {
-		response.send(JSON.stringify({ message: "Error listing manhwa", status: 500 }));
+	}).catch((e) => {
+		response.send(JSON.stringify({ message: "Error deleting manhwa", status: 500, error: e }));
 	});
 }
-app.get('/get_history', cors(), get_history);
+app.get('/get_history', cors(), remove_manhwa);
 
-async function get_history(request, response) {
+async function remove_manhwa(request, response) {
 	const email = request.query.email;
 	const key = btoa(email);
-	await historyRef.doc(key).get().then((snapshot) => {
+	await manhwaRef.doc(key).get().then((snapshot) => {
 		const data = snapshot.map((item) => {
 			return item.data();
 		});
 		response.send(JSON.stringify({ message: "Manhwa listed successfully", status: 200, data: data }));
-	}).catch(() => {
-		response.send(JSON.stringify({ message: "Error listing manhwa", status: 500 }));
+	}).catch((e) => {
+		response.send(JSON.stringify({ message: "Error deleting manhwa", status: 500, error: e }));
 	});
 }
 
