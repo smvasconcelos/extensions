@@ -52,7 +52,7 @@ async function add_manhwa(request, response) {
 	});
 }
 
-app.get('/', cors(), remove_manhwa);
+app.get('/remove_manhwa', cors(), remove_manhwa);
 
 async function remove_manhwa(request, response) {
 	const title = request.query.url;
