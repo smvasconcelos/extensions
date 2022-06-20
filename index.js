@@ -5,7 +5,7 @@ const fireApp = admin.initializeApp({
 		"type": process.env.FIREBASE_type,
 		"project_id": process.env.FIREBASE_project_id,
 		"private_key_id": process.env.FIREBASE_private_key_id,
-		"private_key": process.env.FIREBASE_private_key,
+		"private_key": process.env.FIREBASE_private_key.replace(/\\n/g, '\n'),
 		"client_id": process.env.FIREBASE_client_id,
 		"auth_uri": process.env.FIREBASE_auth_uri,
 		"token_uri": process.env.FIREBASE_token_uri,
