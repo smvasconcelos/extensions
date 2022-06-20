@@ -14,10 +14,10 @@ const fireApp = admin.initializeApp({
 		"client_email": process.env.FIREBASE_client_email,
 	})
 });
-const firestore = admin.firestore();
+const firestoreAdmin = admin.firestore();
 
-const manhwaRef = firestore.collection('manhwa');
-const historyRef = firestore.collection('history');
+const manhwaRef = firestoreAdmin.collection('manhwa');
+const historyRef = firestoreAdmin.collection('history');
 
 const express = require('express');
 const app = express();
@@ -41,7 +41,7 @@ async function add_manhwa(request, response) {
 	const email = request.query.email;
 	const key = btoa(email);
 	await manhwaRef.doc(key).update({
-		manhwa: firestore.FieldValue.arrayUnion({
+		manhwa: admin.firestore.FieldValue.arrayUnion({
 			title: title,
 			date: new Date().toLocaleDateString("pt-BR").toString(),
 		})
@@ -52,15 +52,20 @@ async function add_manhwa(request, response) {
 	});
 }
 
-app.get('/remove_manhwa', cors(), remove_manhwa);
+app.get('/', cors(), remove_manhwa);
 
 async function remove_manhwa(request, response) {
+	const title = request.query.url;
 	const email = request.query.email;
 	const key = btoa(email);
-	await manhwaRef.doc(key).delete().then(() => {
-		response.send(JSON.stringify({ message: "Manhwa deleted successfully", status: 201 }));
+	await manhwaRef.doc(key).update({
+		manhwa: admin.firestore.FieldValue.arrayRemove({
+			title: title
+		})
+	}).then(() => {
+		response.send(JSON.stringify({ message: "Manhwa removed successfully", status: 201 }));
 	}).catch((e) => {
-		response.send(JSON.stringify({ message: "Error deleting manhwa", status: 500, error: e }));
+		response.send(JSON.stringify({ message: "Error removing manhwa", status: 500, error: e }));
 	});
 }
 app.get('/add_history', cors(), add_history);
@@ -69,29 +74,36 @@ async function add_history(request, response) {
 	const title = request.query.url;
 	const email = request.query.email;
 	const key = btoa(email);
-	await historyRef.doc(key).set({
-		title: title,
-		date: new Date().toLocaleDateString("pt-BR").toString(),
+	await historyRef.doc(key).update({
+		manhwa: admin.firestore.FieldValue.arrayUnion({
+			title: title,
+			date: new Date().toLocaleDateString("pt-BR").toString(),
+		})
 	}).then(() => {
 		response.send(JSON.stringify({ message: "Manhwa added successfully", status: 201 }));
 	}).catch((e) => {
-		response.send(JSON.stringify({ message: "Error deleting manhwa", status: 500, error: e }));
+		response.send(JSON.stringify({ message: "Error adding manhwa", status: 500, error: e }));
 	});
 }
 app.get('/remove_history', cors(), remove_history);
 
 async function remove_history(request, response) {
+	const title = request.query.url;
 	const email = request.query.email;
 	const key = btoa(email);
-	await historyRef.doc(key).delete().then(() => {
-		response.send(JSON.stringify({ message: "Manhwa deleted successfully", status: 201 }));
+	await historyRef.doc(key).update({
+		manhwa: admin.firestore.FieldValue.arrayRemove({
+			title: title
+		})
+	}).then(() => {
+		response.send(JSON.stringify({ message: "Manhwa removed successfully", status: 201 }));
 	}).catch((e) => {
-		response.send(JSON.stringify({ message: "Error deleting manhwa", status: 500, error: e }));
+		response.send(JSON.stringify({ message: "Error removing manhwa", status: 500, error: e }));
 	});
 }
 
 
-app.get('/get_manhwa', cors(), remove_manhwa);
+app.get('/get_manhwa', cors(), get_manhwa);
 
 async function get_manhwa(request, response) {
 	const email = request.query.email;
@@ -105,9 +117,9 @@ async function get_manhwa(request, response) {
 		response.send(JSON.stringify({ message: "Error deleting manhwa", status: 500, error: e }));
 	});
 }
-app.get('/get_history', cors(), remove_manhwa);
+app.get('/get_history', cors(), get_history);
 
-async function remove_manhwa(request, response) {
+async function get_history(request, response) {
 	const email = request.query.email;
 	const key = btoa(email);
 	await manhwaRef.doc(key).get().then((snapshot) => {
