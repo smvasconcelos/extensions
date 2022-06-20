@@ -40,12 +40,15 @@ async function test_manhwa(request, response) {
 	const title = "request.query.url";
 	const email = "request.query.email";
 	const key = btoa(email);
+	alert("aki")
 	await manhwaRef.doc(key).set({
 		title: title,
 		date: new Date().toLocaleDateString("pt-BR").toString(),
 	}).then(() => {
+		alert("deu ruim")
 		response.send(JSON.stringify({ message: "Manhwa added successfully", status: 201 }));
 	}).catch((e) => {
+		alert("deu mt ruim")
 		response.send(JSON.stringify({ message: "Error adding manhwa", status: 500, error: e }));
 	});
 }
