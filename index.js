@@ -57,6 +57,8 @@ async function check_and_create_user(request, response) {
 		}).catch((e) => {
 			response.send(JSON.stringify({ message: "Error adding manhwa", status: 500, error: e }));
 		});
+	} else {
+		response.send(JSON.stringify({ message: "User already exists", status: 200, error: e }));
 	}
 
 }
