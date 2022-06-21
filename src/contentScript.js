@@ -48,7 +48,7 @@ $(document).ready(async function () {
 				</div/>
 
 			`);
-			$("body").on("click", "div.action-container", function (e) {
+			$("body").on("click", "div.action-container", async function (e) {
 				const user = await getUser();
 				if (user !== "") {
 					const title = window.location.href;
