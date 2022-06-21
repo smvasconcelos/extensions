@@ -46,7 +46,16 @@ async function check_and_create_user(request, response) {
 
 		if (!userExists.data()) {
 			await manhwaRef.doc(key).set({
-				manhwa: []
+				manhwa: [
+					{
+						title: "",
+						date: "",
+						chapter: "",
+						name: "",
+						img: "",
+						card: false,
+					}
+				]
 			}).then(() => {
 				response.send(JSON.stringify({ message: "Manhwa added successfully", status: 201 }));
 			}).catch((e) => {
