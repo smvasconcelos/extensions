@@ -47,12 +47,23 @@ $(document).ready(async function () {
 
 	}
 
-
 	$("body").on("click", "button#login", () => {
 		const email = $("#email").val();
-		logInLocal(email);
-		window.close();
+		$.get(`https://manhwa-tracker.herokuapp.com/check_and_create_user/?&email=${email}`)
+			.then(
+				(res) => {
+					console.log(res);
+					logInLocal(email);
+					window.close();
+				})
+			.catch(
+				err => {
+					alert("why error");
+					alert(err)
+					console.log(err.data.message);
+				});
 	});
+
 
 	$("body").on("click", "button#reset", () => {
 		window.close();

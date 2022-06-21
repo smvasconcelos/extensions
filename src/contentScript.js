@@ -35,30 +35,40 @@ const tracker = [
 	"mangakakalot"
 ];
 
-$(document).ready(async function () {
-
-	const user = await getUser();
-
-	if (tracker.some((item) => window.location.hostname.includes(item))) {
-
-		if (user !== "") {
-			$("body").append(`
+const setAction = (val) => {
+	if (val !== "") {
+		$("body").append(`
 				<div class="action-container">
 						<img style="width: 50px; height: 50px;" src="https://i.imgur.com/uwQt9XE.png" />
 				</div/>
 
 			`);
-			$("body").on("click", "div.action-container", async function (e) {
-				const user = await getUser();
-				if (user !== "") {
-					const title = window.location.href;
-					const email = user;
-					addManhwa(title, email);
-				}
-			});
+		$("body").on("click", "div.action-container", async function (e) {
+			const val = await getUser();
+			if (val !== "") {
+				const title = window.location.href;
+				const email = val;
+				addManhwa(title, email);
+			}
+		});
 
-		}
-
+	} else {
+		$(".action-container").remove();
 	}
+}
 
+$(document).ready(async function () {
+	if (tracker.some((item) => window.location.hostname.includes(item))) {
+		chrome.storage.onChanged.addListener(function (changes, namespace) {
+			for (let [key, { oldValue, newValue }] of Object.entries(changes)) {
+				if (key === "email") {
+					const user = newValue;
+					setAction(user);
+				}
+			}
+		});
+
+		const val = await getUser();
+		setAction(val);
+	}
 });
