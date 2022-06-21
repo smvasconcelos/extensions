@@ -42,7 +42,7 @@ async function check_and_create_user(request, response) {
 
 	const userExists = await manhwaRef.doc(key).get();
 
-	if (!userExists.exists()) {
+	if (!userExists.data()) {
 		await manhwaRef.doc(key).set({
 			manhwa: []
 		}).then(() => {
