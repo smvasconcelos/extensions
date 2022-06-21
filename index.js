@@ -83,12 +83,19 @@ app.get('/add_manhwa', cors(), add_manhwa);
 
 async function add_manhwa(request, response) {
 	const title = request.query.url;
-	const email = request.query.email;
+	const chapter = request.query.chapter;
+	const name = request.query.name;
+	const img = request.query.img;
+	const card = request.query.card;
 	const key = btoa(email);
 	await manhwaRef.doc(key).update({
 		manhwa: admin.firestore.FieldValue.arrayUnion({
 			title: title,
 			date: new Date().toLocaleDateString("pt-BR").toString(),
+			chapter: chapter || "",
+			name: name || "",
+			img: img || "",
+			card: card || false,
 		})
 	}).then(() => {
 		response.send(JSON.stringify({ message: "Manhwa added successfully", status: 201 }));
