@@ -40,26 +40,33 @@ async function check_and_create_user(request, response) {
 	const email = request.query.email;
 	const key = btoa(email);
 
-	const userExists = await manhwaRef.doc(key).get();
+	try {
 
-	if (!userExists.data()) {
-		await manhwaRef.doc(key).set({
-			manhwa: []
-		}).then(() => {
-			response.send(JSON.stringify({ message: "Manhwa added successfully", status: 201 }));
-		}).catch((e) => {
-			response.send(JSON.stringify({ message: "Error adding manhwa", status: 500, error: e }));
-		});
-		await historyRef.doc(key).set({
-			manhwa: []
-		}).then(() => {
-			response.send(JSON.stringify({ message: "Manhwa added successfully", status: 201 }));
-		}).catch((e) => {
-			response.send(JSON.stringify({ message: "Error adding manhwa", status: 500, error: e }));
-		});
-	} else {
-		response.send(JSON.stringify({ message: "User already exists", status: 200 }));
+		const userExists = await manhwaRef.doc(key).get();
+
+		if (!userExists.data()) {
+			await manhwaRef.doc(key).set({
+				manhwa: []
+			}).then(() => {
+				response.send(JSON.stringify({ message: "Manhwa added successfully", status: 201 }));
+			}).catch((e) => {
+				response.send(JSON.stringify({ message: "Error adding manhwa", status: 500, error: e }));
+			});
+			await historyRef.doc(key).set({
+				manhwa: []
+			}).then(() => {
+				response.send(JSON.stringify({ message: "Manhwa added successfully", status: 201 }));
+			}).catch((e) => {
+				response.send(JSON.stringify({ message: "Error adding manhwa", status: 500, error: e }));
+			});
+		} else {
+			response.send(JSON.stringify({ message: "User already exists", status: 200 }));
+		}
+
+	} catch (err) {
+		response.send(JSON.stringify({ message: "User already exists", status: 200, error: err }));
 	}
+
 
 }
 
