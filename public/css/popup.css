@@ -14,16 +14,16 @@ html {
   color: #222;
 }
 
-body {
-  width: 350px;
-  height: 300px;
+body{
+	width: 250px;
+	height: 200px;
 }
 
 .app {
   height: 100%;
   display: flex;
-  align-items: center;
-  justify-content: center;
+  align-items: space-between;
+  justify-content: flex-start;
   flex-direction: column;
   text-align: center;
   padding: 20px;
