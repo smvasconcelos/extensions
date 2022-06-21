@@ -146,7 +146,7 @@ async function get_manhwa(request, response) {
 	const key = btoa(email);
 	console.log("meu oovo")
 	await manhwaRef.doc(key).get().then((manhwa) => {
-		response.send(JSON.stringify({ message: "Manhwa listed successfully", status: 200, data: manhwa.data() }));
+		response.send(JSON.stringify({ message: "Manhwa listed successfully", status: 200, data: JSON.stringify(manhwa.data()) }));
 	}).catch((e) => {
 		response.send(JSON.stringify({ message: "Error deleting manhwa", status: 500, error: e }));
 	});
@@ -157,7 +157,7 @@ async function get_history(request, response) {
 	const email = request.query.email;
 	const key = btoa(email);
 	await manhwaRef.doc(key).get().then((history) => {
-		response.send(JSON.stringify({ message: "Manhwa listed successfully", status: 200, data: history.data() }));
+		response.send(JSON.stringify({ message: "Manhwa listed successfully", status: 200, data: JSON.stringify(history.data()) }));
 	}).catch((e) => {
 		response.send(JSON.stringify({ message: "Error deleting manhwa", status: 500, error: e }));
 	});
