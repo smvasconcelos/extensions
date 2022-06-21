@@ -50,7 +50,7 @@ async function check_and_create_user(request, response) {
 		}).catch((e) => {
 			response.send(JSON.stringify({ message: "Error adding manhwa", status: 500, error: e }));
 		});
-		await history.doc(key).set({
+		await historyRef.doc(key).set({
 			manhwa: []
 		}).then(() => {
 			response.send(JSON.stringify({ message: "Manhwa added successfully", status: 201 }));
