@@ -34,13 +34,40 @@ app.use(function (req, res, next) {
 app.use(express.json())
 app.use(cors({ origin: "*" }))
 
+app.get('/check_and_create_user', cors(), check_and_create_user);
+
+async function check_and_create_user(request, response) {
+	const email = request.query.email;
+	const key = btoa(email);
+
+	const userExists = await manhwaRef.doc(key).get();
+
+	if (!userExists) {
+		await manhwaRef.doc(key).set({
+			manhwa: []
+		}).then(() => {
+			response.send(JSON.stringify({ message: "Manhwa added successfully", status: 201 }));
+		}).catch((e) => {
+			response.send(JSON.stringify({ message: "Error adding manhwa", status: 500, error: e }));
+		});
+		await history.doc(key).set({
+			manhwa: []
+		}).then(() => {
+			response.send(JSON.stringify({ message: "Manhwa added successfully", status: 201 }));
+		}).catch((e) => {
+			response.send(JSON.stringify({ message: "Error adding manhwa", status: 500, error: e }));
+		});
+	}
+
+}
+
 app.get('/add_manhwa', cors(), add_manhwa);
 
 async function add_manhwa(request, response) {
 	const title = request.query.url;
 	const email = request.query.email;
 	const key = btoa(email);
-	await manhwaRef.doc(key).set({
+	await manhwaRef.doc(key).update({
 		manhwa: admin.firestore.FieldValue.arrayUnion({
 			title: title,
 			date: new Date().toLocaleDateString("pt-BR").toString(),
@@ -74,7 +101,7 @@ async function add_history(request, response) {
 	const title = request.query.url;
 	const email = request.query.email;
 	const key = btoa(email);
-	await historyRef.doc(key).set({
+	await historyRef.doc(key).update({
 		manhwa: admin.firestore.FieldValue.arrayUnion({
 			title: title,
 			date: new Date().toLocaleDateString("pt-BR").toString(),
