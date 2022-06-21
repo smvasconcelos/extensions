@@ -25,3 +25,24 @@ export const removeManhwaHistory = async (title, email) => {
 		return err;
 	});
 }
+
+export const getManhwaHistory = async (title, email) => {
+	return await $.get(`https://manhwa-tracker.herokuapp.com/get_history`).then((res) => {
+		return res;
+	}).catch(err => {
+		return err;
+	});
+}
+
+export const getManhwaInfo = (url) => {
+
+	const type = [
+		"readm",
+		"asurascans",
+		"reaperscans",
+		"mangakakalot"
+	];
+
+	return "";
+
+}

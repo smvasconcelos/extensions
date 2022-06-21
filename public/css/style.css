@@ -11,3 +11,7 @@
 .action-container:hover{
 	opacity: 1;
 }
+
+body{
+	height: 100%;
+}

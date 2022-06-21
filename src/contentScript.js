@@ -1,6 +1,6 @@
 'use strict';
 
-import { addManhwa } from "./lib/manhwa.js";
+import { addManhwaHistory } from "./lib/manhwa.js";
 import { getUser } from "./lib/user.js";
 
 // Communicate with background file by sending a message
@@ -35,20 +35,20 @@ const tracker = [
 	"mangakakalot"
 ];
 
-const setAction = (val) => {
+const setAction = async (val) => {
 	if (val !== "") {
+		await addManhwaHistory(window.location.href, val);
 		$("body").append(`
 				<div class="action-container">
 						<img style="width: 50px; height: 50px;" src="https://i.imgur.com/uwQt9XE.png" />
 				</div/>
-
 			`);
 		$("body").on("click", "div.action-container", async function (e) {
 			const val = await getUser();
 			if (val !== "") {
 				const title = window.location.href;
 				const email = val;
-				addManhwa(title, email);
+				// addManhwa(title, email);
 			}
 		});
 
@@ -67,8 +67,8 @@ $(document).ready(async function () {
 				}
 			}
 		});
-
 		const val = await getUser();
 		setAction(val);
 	}
 });
+

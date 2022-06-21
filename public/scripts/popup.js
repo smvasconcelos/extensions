@@ -25,7 +25,7 @@ $(document).ready(async function () {
 
 		$("#app").append(`
 			<div class="app bg-dark bg-gradient">
-				<img src="./assets/icon48.png" class="img-fluid rounded mx-auto mt-2" alt="logo">
+				<img id="page" src="./assets/icon48.png" class="img-fluid rounded mx-auto mt-2" alt="logo">
 				<div class="input-group has-validation">
 					<input type="text" class="form-control" id="email" aria-describedby="inputGroupPrepend" >
 				</div>
@@ -37,7 +37,7 @@ $(document).ready(async function () {
 
 		$("#app").append(`
 			<div class="app bg-dark bg-gradient">
-				<img src="./assets/icon48.png" class="img-fluid rounded mx-auto mt-2" alt="logo">
+				<img id="page" src="./assets/icon48.png" class="img-fluid rounded mx-auto mt-2" alt="logo">
 				<div class="input-group has-validation">
 					<input value="${user}" type="text" class="form-control" readonly id="email" aria-describedby="inputGroupPrepend" >
 				</div>
@@ -68,6 +68,10 @@ $(document).ready(async function () {
 	$("body").on("click", "button#reset", () => {
 		window.close();
 		resetUser();
+	});
+
+	$("body").on("click", "img#page", () => {
+		chrome.tabs.create({ url: chrome.runtime.getURL("index.html") });
 	});
 
 });
