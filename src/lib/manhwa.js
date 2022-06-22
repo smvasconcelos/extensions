@@ -5,7 +5,7 @@ export const addManhwa = async (title, email, data) => {
 		contentType: 'application/json',
 		crossDomain: true,
 		data: JSON.stringify({
-			title: title,
+			url: title,
 			email: email,
 			...data
 		}),
