@@ -23,11 +23,26 @@ const getManhwaHistorySaved = async () => {
 	});
 }
 
-const removeManhwaSaved = async (title) => {
+const removeManhwaSaved = async (data) => {
 	const email = await getUser();
-	return await $.get(`https://manhwa-tracker.herokuapp.com/remove_manhwa?&email=${email}&url=${title}`).then((res) => {
-		return JSON.parse(res);
+	return await $.ajax({
+		url: `https://manhwa-tracker.herokuapp.com/remove_manhwa`,
+		type: "POST",
+		contentType: 'application/json',
+		crossDomain: true,
+		data: JSON.stringify({
+			title: title,
+			email: email,
+			...data
+		}),
+		dataType: 'json',
+		processData: false,
+		type: 'POST',
+	}).then((res) => {
+		console.log(res);
+		return res;
 	}).catch(err => {
+		console.log(err);
 		return err;
 	});
 }
