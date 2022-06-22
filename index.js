@@ -83,13 +83,14 @@ app.post('/add_manhwa', cors(), add_manhwa);
 
 async function add_manhwa(request, response) {
 	try {
-		const title = request.query.url || "";
-		const chapter = request.query.chapter || "";
-		const name = request.query.name || "";
-		const email = request.query.email || "";
-		const img = request.query.img || "";
-		const card = request.query.card || "";
+		const title = request.body.url || "";
+		const chapter = request.body.chapter || "";
+		const name = request.body.name || "";
+		const email = request.body.email || "";
+		const img = request.body.img || "";
+		const card = request.body.card || "";
 		const key = btoa(email);
+		console.log(request.body, request.query);
 		await manhwaRef.doc(key).update({
 			manhwa: admin.firestore.FieldValue.arrayUnion({
 				title: title,
