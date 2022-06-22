@@ -119,7 +119,7 @@ async function remove_manhwa(request, response) {
 	const key = btoa(email);
 	await manhwaRef.doc(key).update({
 		manhwa: admin.firestore.FieldValue.arrayRemove({
-			data
+			...data
 		})
 	}).then(() => {
 		response.send(JSON.stringify({ message: "Manhwa removed successfully", status: 201 }));
