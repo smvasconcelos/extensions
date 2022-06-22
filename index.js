@@ -82,26 +82,31 @@ async function check_and_create_user(request, response) {
 app.post('/add_manhwa', cors(), add_manhwa);
 
 async function add_manhwa(request, response) {
-	const title = request.body.url || "";
-	const chapter = request.body.chapter || "";
-	const name = request.body.name || "";
-	const img = request.body.img || "";
-	const card = request.body.card || "";
-	const key = btoa(email);
-	await manhwaRef.doc(key).update({
-		manhwa: admin.firestore.FieldValue.arrayUnion({
-			title: title,
-			date: new Date().toLocaleDateString("pt-BR").toString(),
-			chapter: chapter || "",
-			name: name || "",
-			img: img || "",
-			card: card || false,
-		})
-	}).then(() => {
-		response.send(JSON.stringify({ message: "Manhwa added successfully", status: 201 }));
-	}).catch((e) => {
+	try {
+		const title = request.query.url || "";
+		const chapter = request.query.chapter || "";
+		const name = request.query.name || "";
+		const img = request.query.img || "";
+		const card = request.query.card || "";
+		const key = btoa(email);
+		await manhwaRef.doc(key).update({
+			manhwa: admin.firestore.FieldValue.arrayUnion({
+				title: title,
+				date: new Date().toLocaleDateString("pt-BR").toString(),
+				chapter: chapter || "",
+				name: name || "",
+				img: img || "",
+				card: card || false,
+			})
+		}).then(() => {
+			response.send(JSON.stringify({ message: "Manhwa added successfully", status: 201 }));
+		}).catch((e) => {
+			response.send(JSON.stringify({ message: "Error adding manhwa", status: 500, error: e }));
+		});
+
+	} catch (e) {
 		response.send(JSON.stringify({ message: "Error adding manhwa", status: 500, error: e }));
-	});
+	}
 }
 
 app.get('/remove_manhwa', cors(), remove_manhwa);
