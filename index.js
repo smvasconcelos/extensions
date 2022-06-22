@@ -86,6 +86,7 @@ async function add_manhwa(request, response) {
 		const title = request.query.url || "";
 		const chapter = request.query.chapter || "";
 		const name = request.query.name || "";
+		const email = request.query.email || "";
 		const img = request.query.img || "";
 		const card = request.query.card || "";
 		const key = btoa(email);
