@@ -114,21 +114,11 @@ async function add_manhwa(request, response) {
 app.post('/remove_manhwa', cors(), remove_manhwa);
 
 async function remove_manhwa(request, response) {
-	const title = request.body.url || "";
-	const chapter = request.body.chapter || "";
-	const name = request.body.name || "";
+	const data = request.body.data || "";
 	const email = request.body.email || "";
-	const img = request.body.img || "";
-	const card = request.body.card || "";
 	const key = btoa(email);
 	await manhwaRef.doc(key).update({
-		manhwa: admin.firestore.FieldValue.arrayRemove({
-			title: title,
-			chapter: chapter,
-			name: name,
-			img: img,
-			card: card,
-		})
+		manhwa: data
 	}).then(() => {
 		response.send(JSON.stringify({ message: "Manhwa removed successfully", status: 201 }));
 	}).catch((e) => {
@@ -155,13 +145,11 @@ async function add_history(request, response) {
 app.post('/remove_history', cors(), remove_history);
 
 async function remove_history(request, response) {
-	const title = request.body.url;
+	const data = request.body.data;
 	const email = request.body.email;
 	const key = btoa(email);
 	await historyRef.doc(key).update({
-		manhwa: admin.firestore.FieldValue.arrayRemove({
-			title: title
-		})
+		manhwa: data
 	}).then(() => {
 		response.send(JSON.stringify({ message: "Manhwa removed successfully", status: 201 }));
 	}).catch((e) => {
