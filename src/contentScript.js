@@ -1,6 +1,6 @@
 'use strict';
 
-import { getManhwaInfo } from "./lib/manhwa.js";
+import { addManhwa, addManhwaHistory, getManhwaInfo } from "./lib/manhwa.js";
 import { getUser } from "./lib/user.js";
 
 // Communicate with background file by sending a message
@@ -37,7 +37,7 @@ const tracker = [
 
 const setAction = async (val) => {
 	if (val !== "") {
-		// await addManhwaHistory(window.location.href, val);
+		await addManhwaHistory(window.location.href, val);
 
 		$("body").append(`
 				<div class="action-container">
@@ -51,7 +51,8 @@ const setAction = async (val) => {
 				const title = window.location.href;
 				const email = val;
 				const data = await getManhwaInfo();
-				addManhwa(title, email, data);
+				console.log(data);
+				await addManhwa(title, email, data);
 			}
 		});
 

@@ -53,24 +53,25 @@ $(document).ready(async function () {
 						<td class="remove-saved" data="${item}"><i class="bi bi-calendar-x-fill"></i></td>
 					</tr>
 				`).hide().fadeIn(100);
+				if (item.card)
 
-				$("#card-list").append(`
-					<div class="card m-2" style="width: 15rem;">
-						<img src=${item.url || "https://i.imgur.com/i71IPKv.jpg"} class="card-img-top" alt="..."> </img>
-						<div class="card-body">
-							<h5 class="card-title"> <a target="_blank" href="${item.title}" >${item.name || "Title Not Found 404"}</a></h5>
+					$("#card-list").append(`
+						<div class="card m-2" style="width: 15rem; padding: 0;">
+							<img src=${item.img || "https://i.imgur.com/i71IPKv.jpg"}  alt="..." style="width: 100%; height: 150px;"> </img>
+							<div class="card-body">
+								<h5 class="card-title"> <a target="_blank" href="${item.title}" >${item.name || "Title Not Found 404"}</a></h5>
+							</div>
+							<ul class="list-group list-group-flush">
+								<li class="list-group-item">
+									<button type="button" class="btn btn-warning">${item.chapter || 0}</button>
+								</li>
+							</ul>
+							<div class="card-body">
+									<button data="${item}" type="button" class="btn btn-success"><i class="bi bi-plus-circle"></i></button>
+									<button data="${item}" type="button" class="btn btn-danger"><i class="bi bi-shield-fill-x"></i></button>
+							</div>
 						</div>
-						<ul class="list-group list-group-flush">
-							<li class="list-group-item">
-								<button type="button" class="btn btn-warning">${item.chapter || 0}</button>
-							</li>
-						</ul>
-						<div class="card-body">
-								<button data="${item}" type="button" class="btn btn-success"><i class="bi bi-plus-circle"></i></button>
-								<button data="${item}" type="button" class="btn btn-danger"><i class="bi bi-shield-fill-x"></i></button>
-						</div>
-					</div>
-				`)
+					`)
 
 			});
 		} else {

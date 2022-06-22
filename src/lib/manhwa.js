@@ -1,7 +1,22 @@
 export const addManhwa = async (title, email, data) => {
-	return await $.get(`https://manhwa-tracker.herokuapp.com/add_manhwa?url=${title}&email=${email}&chapter=${data.chapter}&name=${data.name}&img=${data.img}&card=${data.card}`).then((res) => {
+	return await $.ajax({
+		url: `https://manhwa-tracker.herokuapp.com/add_manhwa`,
+		type: "POST",
+		contentType: 'application/json',
+		crossDomain: true,
+		data: JSON.stringify({
+			title: title,
+			email: email,
+			...data
+		}),
+		dataType: 'json',
+		processData: false,
+		type: 'POST',
+	}).then((res) => {
+		console.log(res);
 		return res;
 	}).catch(err => {
+		console.log(err);
 		return err;
 	});
 }
