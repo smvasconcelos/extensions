@@ -42,13 +42,7 @@ const removeManhwaHistory = async (title) => {
 
 $(document).ready(async function () {
 
-	$.ajax("https://readm.org/manga/15494/").then((res) => {
-		const html = $($.parseHTML(res));
-		console.log(html.find("h1.page-title").html());
-	});
-
 	const manhwa = await getManhwaHistorySaved().then((res) => {
-		console.log({ res })
 		res = res.data.manhwa;
 		if (res.length > 0) {
 			res.map((item) => {
