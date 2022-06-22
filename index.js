@@ -151,7 +151,9 @@ async function remove_history(request, response) {
 	const email = request.body.email;
 	const key = btoa(email);
 	await historyRef.doc(key).update({
-		manhwa: data
+		manhwa: admin.firestore.FieldValue.arrayRemove({
+			...data
+		})
 	}).then(() => {
 		response.send(JSON.stringify({ message: "Manhwa removed successfully", status: 201 }));
 	}).catch((e) => {
