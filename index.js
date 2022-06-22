@@ -124,7 +124,6 @@ async function remove_manhwa(request, response) {
 	await manhwaRef.doc(key).update({
 		manhwa: admin.firestore.FieldValue.arrayRemove({
 			title: title,
-			date: new Date().toLocaleDateString("pt-BR").toString(),
 			chapter: chapter,
 			name: name,
 			img: img,
