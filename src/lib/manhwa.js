@@ -88,7 +88,6 @@ const readm = async (path) => {
 const asura = async (path) => {
 	console.log(path.replace(/[^0-9]/g, ""));
 	if (path === "/" || !path.includes("/comics/") && !path.includes("chapter")) {
-		alert("a")
 		return {
 			chapter: "",
 			name: "",
@@ -138,20 +137,19 @@ const reaper = async (path) => {
 		return await $.ajax(url).then((res) => {
 			const html = $($.parseHTML(res));
 			const name = html.find("div.post-title h1").html().replace("\n", "");
-			const img = html.find("div.summary_image img.img-responsive").attr("src");
+			const img = html.find("div.summary_image > a > img").data("src");
 			const data = {
 				chapter: chapter,
 				name: name,
 				img: img,
 				card: true,
 			};
-			console.log(data);
+			console.log(data, url);
 			return data;
 		});
 	}
 }
 const kakalot = async (path) => {
-	console.log({ path });
 	if (path === "/" || !path.includes("/manga") && !path.includes("chapter")) {
 		return {
 			chapter: "",
@@ -172,6 +170,7 @@ const kakalot = async (path) => {
 			const html = $($.parseHTML(res));
 			const name = html.find("div.story-info-right h1").html();
 			const img = html.find("span.info-image img.img-loading").attr("src");
+			console.log({ img });
 			const data = {
 				chapter: chapter,
 				name: name,
@@ -205,6 +204,10 @@ export const getManhwaInfo = async (url) => {
 		if (origin.includes(item)) {
 			if (item === "readm" && origin.includes("readmanganato"))
 				return false
+			if (item === "reaperscans" && origin.includes("asurascans"))
+				return false
+			if (item === "asurascans" && origin.includes("reaperscans"))
+				return false
 			return item;
 		}
 		else
@@ -213,6 +216,7 @@ export const getManhwaInfo = async (url) => {
 
 	const path = window.location.pathname;
 	const index = type.indexOf(option);
+	console.log(getInfo[index])
 	return await getInfo[index](path);
 
 }

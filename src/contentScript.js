@@ -32,7 +32,8 @@ const tracker = [
 	"readm",
 	"asurascans",
 	"reaperscans",
-	"mangakakalot"
+	"mangakakalot",
+	"readmanganato"
 ];
 
 const setAction = async (val) => {
@@ -47,12 +48,13 @@ const setAction = async (val) => {
 
 		$("body").on("click", "div.action-container", async function (e) {
 			const val = await getUser();
+			// const val = "smvasconcelos11@gmail.com";
 			if (val !== "") {
 				const title = window.location.href;
 				const email = val;
 				const data = await getManhwaInfo();
-				console.log(data);
-				await addManhwa(title, email, data);
+				if (data)
+					await addManhwa(title, email, data);
 			}
 		});
 

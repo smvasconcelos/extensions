@@ -11,6 +11,8 @@ const getUser = async () => {
 
 const getManhwaHistory = async () => {
 	const email = await getUser();
+	if (!email)
+		return;
 	return await $.get(`https://manhwa-tracker.herokuapp.com/get_history?&email=${email}`).then((res) => {
 		return JSON.parse(res);
 	}).catch(err => {
@@ -19,6 +21,8 @@ const getManhwaHistory = async () => {
 }
 const getManhwaHistorySaved = async () => {
 	const email = await getUser();
+	if (!email)
+		return;
 	return await $.get(`https://manhwa-tracker.herokuapp.com/get_manhwa?&email=${email}`).then((res) => {
 		return JSON.parse(res);
 	}).catch(err => {
@@ -28,6 +32,8 @@ const getManhwaHistorySaved = async () => {
 
 const removeManhwaSaved = async (data) => {
 	const email = await getUser();
+	if (!email)
+		return;
 	return await $.ajax({
 		url: `https://manhwa-tracker.herokuapp.com/remove_manhwa`,
 		type: "POST",
@@ -50,6 +56,8 @@ const removeManhwaSaved = async (data) => {
 }
 const removeManhwaHistory = async (data) => {
 	const email = await getUser();
+	if (!email)
+		return;
 	return await $.ajax({
 		url: `https://manhwa-tracker.herokuapp.com/remove_history`,
 		type: "POST",
@@ -115,6 +123,8 @@ const distance = (s1, s2) => {
 $(document).ready(async function () {
 
 	manhwa = await getManhwaHistorySaved().then((res) => {
+		if (!res)
+			return
 		res = res.data.manhwa;
 		if (res.length > 0) {
 			res.map((item) => {
@@ -122,13 +132,13 @@ $(document).ready(async function () {
 					<tr style="cursor:pointer;">
 						<td class="open-manhwa">${item.date}</td>
 						<td class="title" style="display: none;">${item.title}</td>
-						<td class="open-manhwa">${item.name}</td>
+						<td class="open-manhwa">${item.name || item.title}</td>
 						<td class="remove-saved" data-manhwa="${btoa(unescape(JSON.stringify(item)))}"><i class="bi bi-calendar-x-fill"></i></td>
 					</tr>
 				`).hide().fadeIn(100);
 				if (item.card)
 					$("#card-list").append(`
-						<div class="card m-2 shadow-sm " style="width: 15rem; padding: 0;">
+						<div class="card m-2 shadow-sm d-flex justify-content-around" style="width: 14rem; padding: 0;">
 							<img src=${item.img || "https://i.i1Amgur.com/i71IPKv.jpg"}  alt="..." style="width: 100%; height: 250px;"> </img>
 							<div class="m-2 mb-0">
 								<p> <a class="title target="_blank" href="${item.title}" >${item.name || "Title Not Found 404"}</a></p>
@@ -146,11 +156,27 @@ $(document).ready(async function () {
 		} else {
 			$("#manhwa tbody").append(`
 				<tr>
-					<td>None</td>
-					<td>None</td>
-					<td><i class="bi bi-calendar-x-fill"></i></td>
+					<td>Not Found</td>
+					<td>Not Found</td>
+					<td>Not Found</td>
 				</tr>
 			`);
+		}
+
+		if ($(".card").length == 0) {
+			$("#card-list").append(`
+						<div class="card m-2 shadow-sm " style="width: 14rem; padding: 0;">
+							<img src="https://i.imgur.com/i71IPKv.jpg"  alt="..." style="width: 100%; height: 250px;"> </img>
+							<div class="m-2 mb-0">
+								<p> <a class="title target="_blank" href="#" >Not Found</a></p>
+							</div>
+							<ul class="list-group list-group-flush">
+								<li class="list-group-item d-flex justify-content-end">
+									<button type="button" class="btn btn-warning">Chapter Not Found</button>
+								</li>
+							</ul>
+						</div>
+					`)
 		}
 
 		return res;
@@ -178,7 +204,7 @@ $(document).ready(async function () {
 	$("body").on("click", "td.remove-saved", async function (e) {
 		const data = $(this).data("manhwa");
 		await removeManhwaSaved(JSON.parse(atob(unescape(data)))).then((res) => {
-			$(this).parent().parent().fadeOut(200).remove();
+			$(this).parent().fadeOut(200).remove();
 		}).catch(err => {
 			console.log(err);
 		});
@@ -186,13 +212,15 @@ $(document).ready(async function () {
 	$("body").on("click", ".btn-danger", async function (e) {
 		const data = $(this).data("manhwa");
 		await removeManhwaSaved(JSON.parse(atob(data))).then((res) => {
-			$(this).parent().parent().fadeOut(200).remove();
+			$(this).parent().parent().parent().fadeOut(200).remove();
 		}).catch(err => {
 			console.log(err);
 		});
 	});
 
 	history = await getManhwaHistory().then(res => {
+		if (!res)
+			return
 		res = res.data.manhwa;
 		if (res.length > 0) {
 			res.map((item) => {
@@ -209,7 +237,7 @@ $(document).ready(async function () {
 				<tr>
 					<td>None</td>
 					<td>None</td>
-					<td><i class="bi bi-calendar-x-fill"></i></td>
+					<td>None</td>
 				</tr>
 			`);
 		}

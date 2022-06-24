@@ -24,24 +24,24 @@ $(document).ready(async function () {
 	if (!user) {
 
 		$("#app").append(`
-			<div class="app bg-dark bg-gradient">
-				<img id="page" src="./assets/icon48.png" class="img-fluid rounded mx-auto mt-2" alt="logo">
+			<div class="app bg-dark bg-gradient p-4">
+				<img style="height: 75px; width: auto;" src="./assets/icon128.png" class="img-fluid rounded mx-auto m-2" alt="logo">
 				<div class="input-group has-validation">
 					<input type="text" class="form-control" id="email" aria-describedby="inputGroupPrepend" >
 				</div>
-				<button id="login" type="button" class="btn btn-warning mt-2">Set Key</button>
+				<button id="login" type="button" class="btn btn-warning mt-1">Set Key</button>
 			</div>
 		`);
 
 	} else {
 
 		$("#app").append(`
-			<div class="app bg-dark bg-gradient">
-				<img id="page" src="./assets/icon48.png" class="img-fluid rounded mx-auto mt-2" alt="logo">
+			<div class="app bg-dark bg-gradient p-4">
+				<img id="page" style="height: 75px; width: auto;" src="./assets/icon128.png" class="img-fluid rounded mx-auto m-2" alt="logo">
 				<div class="input-group has-validation">
 					<input value="${user}" type="text" class="form-control" readonly id="email" aria-describedby="inputGroupPrepend" >
 				</div>
-				<button id="reset" type="button" class="btn btn-warning mt-2">Reset Key</button>
+				<button id="reset" type="button" class="btn btn-warning  mt-1">Reset Key</button>
 			</div>
 		`);
 
@@ -58,8 +58,8 @@ $(document).ready(async function () {
 				})
 			.catch(
 				err => {
-					alert("why error");
-					alert(err)
+					// alert("why error");
+					alert(err.data.message)
 					console.log(err.data.message);
 				});
 	});
