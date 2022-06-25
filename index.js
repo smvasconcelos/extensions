@@ -32,6 +32,7 @@ app.use(function (req, res, next) {
 });
 
 app.use(express.json())
+
 app.use(cors({ origin: "*" }))
 
 app.get('/check_and_create_user', cors(), check_and_create_user);
@@ -81,6 +82,46 @@ async function check_and_create_user(request, response) {
 
 app.post('/add_manhwa', cors(), add_manhwa);
 
+const obj_match = (fields, new_obj, old_obj) => {
+
+	var match = false;
+
+	fields.map(field => {
+
+		if (new_obj[field] == old_obj[field])
+			match = true;
+		else
+			match = false;
+
+	});
+
+	return match ? new_obj : old_obj;
+
+}
+
+async function check_manhwa_data(obj, email) {
+	const fields = [
+		"card",
+		"img",
+		"name",
+	];
+
+	const key = btoa(email);
+	var new_data;
+
+	await manhwaRef.doc(key).get().then(res => {
+		const data = res.data().manhwa;
+		new_data = data.map(item => {
+			return obj_match(fields, obj, item);
+		});
+	}).catch(e => {
+		console.log(e);
+	});
+
+	return new_data;
+
+}
+
 async function add_manhwa(request, response) {
 	try {
 		const title = request.body.url || "";
@@ -90,16 +131,20 @@ async function add_manhwa(request, response) {
 		const img = request.body.img || "";
 		const card = request.body.card || "";
 		const key = btoa(email);
-		console.log(request.body, request.query);
+
+		const data = {
+			title: title,
+			date: new Date().toLocaleDateString("pt-BR").toString(),
+			chapter: chapter || "",
+			name: name || "",
+			img: img || "",
+			card: card || false,
+		};
+
+		const new_data = check_manhwa_data(data, email);
+
 		await manhwaRef.doc(key).update({
-			manhwa: admin.firestore.FieldValue.arrayUnion({
-				title: title,
-				date: new Date().toLocaleDateString("pt-BR").toString(),
-				chapter: chapter || "",
-				name: name || "",
-				img: img || "",
-				card: card || false,
-			})
+			manhwa: admin.firestore.FieldValue.arrayUnion(new_data)
 		}).then(() => {
 			response.send(JSON.stringify({ message: "Manhwa added successfully", status: 201 }));
 		}).catch((e) => {
@@ -161,7 +206,6 @@ async function remove_history(request, response) {
 	});
 }
 
-
 app.get('/get_manhwa', cors(), get_manhwa);
 
 async function get_manhwa(request, response) {
@@ -175,6 +219,7 @@ async function get_manhwa(request, response) {
 		response.send(JSON.stringify({ message: "Error deleting manhwa", status: 500, error: e }));
 	});
 }
+
 app.get('/get_history', cors(), get_history);
 
 async function get_history(request, response) {
