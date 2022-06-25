@@ -95,7 +95,7 @@ const obj_match = (fields, new_obj, old_obj) => {
 
 	});
 
-	return match ? new_obj : old_obj;
+	return match ? { data: new_obj, match: match } : { data: old_obj, match: match };
 
 }
 
@@ -109,16 +109,22 @@ async function check_manhwa_data(obj, email) {
 
 	const key = btoa(email);
 	var new_data;
+	var match = false;
 
 	await manhwaRef.doc(key).get().then(res => {
 		const data = res.data().manhwa;
 		new_data = data.map(item => {
-			return obj_match(fields, obj, item);
+			const new_item = obj_match(fields, obj, item);
+			if (new_item.match)
+				match = true;
+			return new_item.data;
 		});
 	}).catch(e => {
 		console.log(e);
 	});
 
+	if (!match)
+		new_data.push(obj);
 	return new_data;
 
 }
@@ -146,7 +152,7 @@ async function add_manhwa(request, response) {
 		console.log({ new_data, data });
 
 		await manhwaRef.doc(key).update({
-			manhwa: Array.isArray(new_data) ? new_data : admin.firestore.FieldValue.arrayUnion(new_data)
+			manhwa: new_data
 		}).then(() => {
 			response.send(JSON.stringify({ message: "Manhwa added successfully", status: 201 }));
 		}).catch((e) => {
