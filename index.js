@@ -100,6 +100,7 @@ const obj_match = (fields, new_obj, old_obj) => {
 }
 
 async function check_manhwa_data(obj, email) {
+
 	const fields = [
 		"card",
 		"img",
@@ -142,6 +143,7 @@ async function add_manhwa(request, response) {
 		};
 
 		const new_data = check_manhwa_data(data, email);
+		console.log({ new_data, data });
 
 		await manhwaRef.doc(key).update({
 			manhwa: admin.firestore.FieldValue.arrayUnion(new_data)
