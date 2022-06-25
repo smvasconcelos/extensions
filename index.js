@@ -146,7 +146,7 @@ async function add_manhwa(request, response) {
 		console.log({ new_data, data });
 
 		await manhwaRef.doc(key).update({
-			manhwa: admin.firestore.FieldValue.arrayUnion(new_data)
+			manhwa: Array.isArray(new_data) ? new_data : admin.firestore.FieldValue.arrayUnion(new_data)
 		}).then(() => {
 			response.send(JSON.stringify({ message: "Manhwa added successfully", status: 201 }));
 		}).catch((e) => {
