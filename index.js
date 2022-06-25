@@ -114,9 +114,15 @@ async function check_manhwa_data(obj, email) {
 	await manhwaRef.doc(key).get().then(res => {
 		const data = res.data().manhwa;
 		new_data = data.map(item => {
+
+			if (match)
+				return item
+
 			const new_item = obj_match(fields, obj, item);
+
 			if (new_item.match)
 				match = true;
+
 			return new_item.data;
 		});
 	}).catch(e => {
@@ -149,7 +155,7 @@ async function add_manhwa(request, response) {
 		};
 
 		const new_data = await check_manhwa_data(data, email);
-		console.log({ new_data, data });
+		// console.log({ new_data, data });
 
 		await manhwaRef.doc(key).update({
 			manhwa: new_data
