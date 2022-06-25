@@ -1,8 +1,11 @@
-<h1 align="center"> PayFlow </h1>
+<h1 align="center"> Manhwa Tracker </h1>
 
 <div align="center">
 
-<img alt="Gif da Aplicação" src=".github\app.gif"  height="430">
+<img alt="application image" src=".github\1.jpg"  height="120">
+<img alt="application image" src=".github\2.jpg"  height="120">
+<img alt="application image" src=".github\3.jpg"  height="120">
+<img alt="application image" src=".github\4.jpg"  height="120">
 
 </div>
 
