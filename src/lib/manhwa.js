@@ -13,10 +13,10 @@ export const addManhwa = async (title, email, data) => {
 		processData: false,
 		type: 'POST',
 	}).then((res) => {
-		console.log(res);
+		console.log({ res });
 		return res;
 	}).catch(err => {
-		console.log(err);
+		console.log({ err });
 		return err;
 	});
 }
@@ -177,7 +177,7 @@ const kakalot = async (path) => {
 				img: img,
 				card: true,
 			};
-			console.log(data);
+			// console.log(data);
 			return data;
 		});
 	}
@@ -216,7 +216,7 @@ export const getManhwaInfo = async (url) => {
 
 	const path = window.location.pathname;
 	const index = type.indexOf(option);
-	console.log(getInfo[index])
+	// console.log(getInfo[index])
 	return await getInfo[index](path);
 
 }

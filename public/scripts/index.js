@@ -128,6 +128,7 @@ $(document).ready(async function () {
 		res = res.data.manhwa;
 		if (res.length > 0) {
 			res.map((item) => {
+				console.log({ item });
 				$("#manhwa tbody").append(`
 					<tr style="cursor:pointer;">
 						<td class="open-manhwa">${item.date}</td>
@@ -138,10 +139,10 @@ $(document).ready(async function () {
 				`).hide().fadeIn(100);
 				if (item.card)
 					$("#card-list").append(`
-						<div class="card m-2 shadow-sm d-flex justify-content-around" style="width: 14rem; padding: 0;">
+						<div class="card m-2 shadow-sm" style="width: 14rem; padding: 0;">
 							<img src=${item.img || "https://i.i1Amgur.com/i71IPKv.jpg"}  alt="..." style="width: 100%; height: 250px;"> </img>
 							<div class="m-2 mb-0">
-								<p> <a class="title target="_blank" href="${item.title}" >${item.name || "Title Not Found 404"}</a></p>
+								<p> <a class="title" target="_blank" href="${item.title}" >${item.name || "Title Not Found 404"}</a></p>
 							</div>
 							<ul class="list-group list-group-flush">
 								<li class="list-group-item d-flex justify-content-end">
@@ -168,7 +169,7 @@ $(document).ready(async function () {
 						<div class="card m-2 shadow-sm " style="width: 14rem; padding: 0;">
 							<img src="https://i.imgur.com/i71IPKv.jpg"  alt="..." style="width: 100%; height: 250px;"> </img>
 							<div class="m-2 mb-0">
-								<p> <a class="title target="_blank" href="#" >Not Found</a></p>
+								<p> <a class="title" target="_blank" href="#" >Not Found</a></p>
 							</div>
 							<ul class="list-group list-group-flush">
 								<li class="list-group-item d-flex justify-content-end">
@@ -223,7 +224,7 @@ $(document).ready(async function () {
 			return
 		res = res.data.manhwa;
 		if (res.length > 0) {
-			res.map((item) => {
+			res.reverse().map((item) => {
 				$("#history tbody").append(`
 					<tr style="cursor:pointer;" class="open-manhwa">
 						<td>${item.date}</td>
@@ -247,31 +248,30 @@ $(document).ready(async function () {
 		const search = $(this).val().toLowerCase();
 		const searchTarget = $("#nav-bar").find("a.nav-link.active").attr("href");
 		if (search == "") {
+			console.log("to aki")
 			$(searchTarget).find("tr").fadeIn(100);
 			$(searchTarget).find(".card").fadeIn(100);
 			return;
 		}
 
-
 		if (searchTarget == "#cards")
 
-			$(searchTarget).find(".card").each(function () {
+			$(searchTarget).find(`div.card`).each(function (index) {
 
-				var found = false;
+				var foundManhwa = false;
 				const val = $(this).find("a.title").text().toLowerCase();
 				const similarity_r = similarity(val, search);
-
-				if (val.includes(search) || similarity(val, search) >= 0.6)
-					found = true;
+				if (val.includes(search) || similarity_r >= 0.3)
+					foundManhwa = true;
 				else
-					found = false;
+					foundManhwa = false;
 
-				console.log({ found, search, val, similarity_r })
-
-				if (!found)
-					$(this).fadeOut(100);
-				else
-					$(this).fadeIn(100);
+				if (!foundManhwa) {
+					$(this).fadeOut(200);
+				}
+				else {
+					$(this).fadeIn(200);
+				}
 
 			});
 
@@ -286,7 +286,7 @@ $(document).ready(async function () {
 						if (found)
 							return;
 
-						if (val.includes(search) || similarity(val, search) >= 0.6)
+						if (val.includes(search) || similarity(val, search) >= 0.3)
 							found = true;
 						else
 							found = false;
