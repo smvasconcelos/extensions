@@ -142,7 +142,7 @@ async function add_manhwa(request, response) {
 			card: card || false,
 		};
 
-		const new_data = check_manhwa_data(data, email);
+		const new_data = await check_manhwa_data(data, email);
 		console.log({ new_data, data });
 
 		await manhwaRef.doc(key).update({
