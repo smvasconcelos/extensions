@@ -122,6 +122,7 @@ const distance = (s1, s2) => {
 
 $(document).ready(async function () {
 
+	console.log(Base64.encode("ASDAJSDJASJDOJAOJDOJIOASJD"));
 	manhwa = await getManhwaHistorySaved().then((res) => {
 		if (!res)
 			return
@@ -134,12 +135,12 @@ $(document).ready(async function () {
 						<td class="open-manhwa">${item.date}</td>
 						<td class="title" style="display: none;">${item.title}</td>
 						<td class="open-manhwa">${item.name || item.title}</td>
-						<td class="remove-saved" data-manhwa="${btoa(unescape(JSON.stringify(item)))}"><i class="bi bi-calendar-x-fill"></i></td>
+						<td class="remove-saved" data-manhwa="${Base64.encode(unescape(JSON.stringify(item)))}"><i class="bi bi-calendar-x-fill"></i></td>
 					</tr>
 				`).hide().fadeIn(100);
 				if (item.card)
 					$("#card-list").append(`
-						<div class="card m-2 shadow-sm" style="width: 14rem; padding: 0;">
+						<div class="card m-2 shadow" style="width: 14rem; padding: 0; display: flex; justify-content: space-between;">
 							<img src=${item.img || "https://i.i1Amgur.com/i71IPKv.jpg"}  alt="..." style="width: 100%; height: 250px;"> </img>
 							<div class="m-2 mb-0">
 								<p> <a class="title" target="_blank" href="${item.title}" >${item.name || "Title Not Found 404"}</a></p>
@@ -147,7 +148,7 @@ $(document).ready(async function () {
 							<ul class="list-group list-group-flush">
 								<li class="list-group-item d-flex justify-content-end">
 									<button type="button" class="btn btn-warning">Chapter ${item.chapter || 0}</button>
-									<button data-manhwa="${btoa(unescape(JSON.stringify(item)))}" type="button" class="btn btn-danger  ms-2"><i class="bi bi-shield-fill-x"></i></button>
+									<button data-manhwa="${Base64.encode(unescape(JSON.stringify(item)))}" type="button" class="btn btn-danger  ms-2"><i class="bi bi-shield-fill-x"></i></button>
 								</li>
 							</ul>
 						</div>
@@ -166,7 +167,7 @@ $(document).ready(async function () {
 
 		if ($(".card").length == 0) {
 			$("#card-list").append(`
-						<div class="card m-2 shadow-sm " style="width: 14rem; padding: 0;">
+						<div class="card m-2 shadow-sm " style="width: 14rem; padding: 0; display: flex; justify-content: space-around;">
 							<img src="https://i.imgur.com/i71IPKv.jpg"  alt="..." style="width: 100%; height: 250px;"> </img>
 							<div class="m-2 mb-0">
 								<p> <a class="title" target="_blank" href="#" >Not Found</a></p>
@@ -194,8 +195,8 @@ $(document).ready(async function () {
 		e.stopPropagation();
 		e.preventDefault();
 		const data = $(this).data("manhwa");
-		console.log(JSON.parse(atob(data)));
-		await removeManhwaHistory(JSON.parse(atob(unescape(data)))).then((res) => {
+		console.log(JSON.parse(Base64.decode(data)));
+		await removeManhwaHistory(JSON.parse(Base64.decode(unescape(data)))).then((res) => {
 			$(this).parent().fadeOut(200).remove();
 		}).catch(err => {
 			console.log(err);
@@ -204,7 +205,7 @@ $(document).ready(async function () {
 
 	$("body").on("click", "td.remove-saved", async function (e) {
 		const data = $(this).data("manhwa");
-		await removeManhwaSaved(JSON.parse(atob(unescape(data)))).then((res) => {
+		await removeManhwaSaved(JSON.parse(Base64.decode(unescape(data)))).then((res) => {
 			$(this).parent().fadeOut(200).remove();
 		}).catch(err => {
 			console.log(err);
@@ -212,7 +213,7 @@ $(document).ready(async function () {
 	});
 	$("body").on("click", ".btn-danger", async function (e) {
 		const data = $(this).data("manhwa");
-		await removeManhwaSaved(JSON.parse(atob(data))).then((res) => {
+		await removeManhwaSaved(JSON.parse(Base64.decode(unescape(data)))).then((res) => {
 			$(this).parent().parent().parent().fadeOut(200).remove();
 		}).catch(err => {
 			console.log(err);
@@ -229,7 +230,7 @@ $(document).ready(async function () {
 					<tr style="cursor:pointer;" class="open-manhwa">
 						<td>${item.date}</td>
 						<td class="title">${item.title}</td>
-						<td class="remove-saved-history" data-manhwa="${btoa(unescape(JSON.stringify(item)))}"><i class="bi bi-calendar-x-fill"></i></td>
+						<td class="remove-saved-history" data-manhwa="${Base64.encode(unescape(JSON.stringify(item)))}"><i class="bi bi-calendar-x-fill"></i></td>
 					</tr>
 				`).hide().fadeIn(100);
 			});
