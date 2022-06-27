@@ -37,11 +37,12 @@ $(document).ready(async function () {
 
 		$("#app").append(`
 			<div class="app bg-dark bg-gradient p-4">
-				<img id="page" style="height: 75px; width: auto;" src="./assets/icon128.png" class="img-fluid rounded mx-auto m-2" alt="logo">
+				<img id="page" style="height: 75px; width: auto;" src="./assets/icon128.png" class="page img-fluid rounded mx-auto m-2" alt="logo">
 				<div class="input-group has-validation">
 					<input value="${user}" type="text" class="form-control" readonly id="email" aria-describedby="inputGroupPrepend" >
 				</div>
 				<button id="reset" type="button" class="btn btn-warning  mt-1">Reset Key</button>
+				<button type="button" class="page btn btn-warning  mt-1">Open Collection</button>
 			</div>
 		`);
 
@@ -70,7 +71,7 @@ $(document).ready(async function () {
 		resetUser();
 	});
 
-	$("body").on("click", "img#page", () => {
+	$("body").on("click", ".page", () => {
 		chrome.tabs.create({ url: chrome.runtime.getURL("index.html") });
 	});
 

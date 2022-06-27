@@ -16,7 +16,8 @@ html {
 
 body{
 	width: 250px;
-	height: 220px;
+	min-height: 220px;
+	max-height: fit-content;
 }
 
 .app {
