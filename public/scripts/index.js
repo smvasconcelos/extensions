@@ -122,11 +122,12 @@ const distance = (s1, s2) => {
 
 $(document).ready(async function () {
 
-	console.log(Base64.encode("ASDAJSDJASJDOJAOJDOJIOASJD"));
+	// console.log(Base64.encode("ASDAJSDJASJDOJAOJDOJIOASJD"));
 	manhwa = await getManhwaHistorySaved().then((res) => {
 		if (!res)
 			return
 		res = res.data.manhwa;
+		$(".manhwa-counter").text(`${res.length} entries`);
 		if (res.length > 0) {
 			res.map((item) => {
 				console.log({ item });
@@ -224,6 +225,7 @@ $(document).ready(async function () {
 		if (!res)
 			return
 		res = res.data.manhwa;
+		$(".history-counter").text(`${res.length} entries`);
 		if (res.length > 0) {
 			res.reverse().map((item) => {
 				$("#history tbody").append(`
@@ -306,5 +308,6 @@ $(document).ready(async function () {
 
 
 	})
+
 
 });
