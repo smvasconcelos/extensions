@@ -189,7 +189,7 @@ $(document).ready(async function () {
 	$("body").on("click", ".open-manhwa", async function (e) {
 		e.stopPropagation();
 		e.preventDefault();
-		const url = $(this).parent().find("td.title").text();
+		const url = $(this).find("td.title").text();
 		window.open(url);
 	});
 
