@@ -182,12 +182,47 @@ const kakalot = async (path) => {
 		});
 	}
 }
+const mangasee = async (path) => {
+	if (path === "/" || !path.includes("/manga") && !path.includes("read-online")) {
+		return {
+			chapter: "",
+			name: "",
+			img: "",
+			card: false,
+		}
+	} else {
+		if (!path.includes("read-online")) {
+			var url = window.location.href;
+			var chapter = "";
+		} else {
+			console.log("aki");
+			var url = window.location.origin;
+			var title = path.split("/")[2].split("-");
+			chapter = title[title.length - 3];
+			title = title.slice(0, title.length - 4).join("-");
+			url = `${url}/manga/${title}`;
+		}
+		return await $.ajax(url).then((res) => {
+			const html = $($.parseHTML(res));
+			const name = html.find("div.BoxBody h1").html();
+			const img = html.find("div.BoxBody > div > div > img").attr("src");
+			const data = {
+				chapter: chapter,
+				name: name,
+				img: img,
+				card: true,
+			};
+			return data;
+		});
+	}
+}
 const getInfo = {
 	0: readm,
 	1: asura,
 	2: reaper,
 	3: kakalot,
 	4: kakalot,
+	5: mangasee,
 }
 
 export const getManhwaInfo = async (url) => {
@@ -197,7 +232,8 @@ export const getManhwaInfo = async (url) => {
 		"asurascans",
 		"reaperscans",
 		"mangakakalot",
-		"readmanganato"
+		"readmanganato",
+		"mangasee123"
 	];
 	const option = type.filter((item, index) => {
 

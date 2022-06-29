@@ -124,6 +124,7 @@ $(document).ready(async function () {
 
 	// console.log(Base64.encode("ASDAJSDJASJDOJAOJDOJIOASJD"));
 	manhwa = await getManhwaHistorySaved().then((res) => {
+		$("#loading").addClass("visually-hidden");
 		if (!res)
 			return
 		res = res.data.manhwa;

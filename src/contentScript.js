@@ -33,7 +33,8 @@ const tracker = [
 	"asurascans",
 	"reaperscans",
 	"mangakakalot",
-	"readmanganato"
+	"readmanganato",
+	"mangasee123"
 ];
 
 const setAction = async (val) => {
@@ -53,6 +54,7 @@ const setAction = async (val) => {
 				const title = window.location.href;
 				const email = val;
 				const data = await getManhwaInfo();
+
 				if (data)
 					await addManhwa(title, email, data);
 			}
