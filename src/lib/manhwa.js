@@ -84,6 +84,7 @@ const readm = async(path) => {
         });
     }
 }
+
 const asura = async(path) => {
     console.log(path.replace(/[^0-9]/g, ""));
     if (path === "/" || !path.includes("/manga/") && !path.includes("chapter")) {
@@ -116,6 +117,7 @@ const asura = async(path) => {
         });
     }
 }
+
 const reaper = async(path) => {
     // Root
     if (path === "/" || !path.includes("/series/") && !path.includes("chapter")) {
@@ -151,6 +153,7 @@ const reaper = async(path) => {
         });
     }
 }
+
 const kakalot = async(path) => {
     if (path === "/" || !path.includes("/manga") && !path.includes("chapter")) {
         return {
@@ -184,6 +187,7 @@ const kakalot = async(path) => {
         });
     }
 }
+
 const mangasee = async(path) => {
     if (path === "/" || !path.includes("/manga") && !path.includes("read-online")) {
         return {
@@ -218,6 +222,7 @@ const mangasee = async(path) => {
         });
     }
 }
+
 const getInfo = {
     0: readm,
     1: asura,

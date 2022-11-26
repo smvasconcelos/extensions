@@ -1,26 +1,67 @@
-.action-container{
-	position: fixed;
-	right: 10px;
-	top: 20%;
-	z-index: 999;
-	opacity: .5;
-	transition: opacity 0.2s ease-in-out;
-	cursor: pointer;
+.action-container {
+    position: fixed;
+    right: 10px;
+    top: 20%;
+    z-index: 999;
+    opacity: .5;
+    transition: opacity 0.2s ease-in-out;
+    cursor: pointer;
 }
 
-.action-container:hover{
-	opacity: 1;
+.action-container:hover {
+    opacity: 1;
 }
 
-body{
-	height: 100%;
+body {
+    height: 100%;
 }
 
-#search-field{
-	position: sticky !important;
-	top: 5% !important;
-	width: 100% !important;
-	z-index: 99;
-	/* background-color: rgba(255,255,255,.8); */
-	/* padding: 1em; */
+#search-field {
+    position: sticky !important;
+    top: 5% !important;
+    width: 100% !important;
+    z-index: 99;
+    /* background-color: rgba(255,255,255,.8); */
+    /* padding: 1em; */
+}
+
+#card-list {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    width: 100%;
+}
+
+#card-list .card {
+    background-color: rgba(0, 0, 0, 0.1);
+    border: none;
+}
+
+#card-list a {
+    text-decoration: none;
+    color: white;
+}
+
+#card-list .list-group-item {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.nav-link {
+    text-decoration: none !important;
+    color: white;
+}
+
+.nav-link::hover {
+    color: white !important;
+}
+
+#manhwa td,
+#history td {
+    background-color: rgba(0, 0, 0, 0.2) !important;
+    color: white !important;
+}
+
+.history-counter,
+.manhwa-counter {
+    color: white !important;
 }
