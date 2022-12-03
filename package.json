@@ -3,7 +3,7 @@
   "description": "just a server",
   "version": "2.0.0",
   "engines": {
-    "node": "16.x"
+    "node": "19.x"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
