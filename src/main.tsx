@@ -1,9 +1,12 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import { PopupPage } from './pages/Popup/Popup.pages'
+import { GlobalStyles } from 'twin.macro'
+import { Home } from './pages/Home/Home.page'
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
-    <PopupPage />
+    <GlobalStyles />
+    {/* <PopupPage /> */}
+    <Home />
   </React.StrictMode>,
 )

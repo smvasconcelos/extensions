@@ -1,8 +1,4 @@
-import tw from "twin.macro"
-
-const Wrapper = tw.div`
-  bg-amber-600
-`
+import { Wrapper } from "./Popup.styles";
 
 export function PopupPage(): JSX.Element {
   return <Wrapper>
