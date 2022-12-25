@@ -10,8 +10,8 @@ export function Card({ title, lastChapter, id, imgUrl, action, chapterUrl }: ICa
           {title}
       </CardTitle>
       <CardButtonContainer>
-        <Button link={chapterUrl} callback={() => action(id)} text={`Chapter ${lastChapter}`} />
-        <Button remove={true} callback={() => alert(id)} text={`Delete`} />
+        <Button link={chapterUrl} text={`Chapter ${lastChapter}`} />
+        <Button remove={true} callback={action} text={`Delete`} />
       </CardButtonContainer>
     </CardContainer>
   </Wrapper>

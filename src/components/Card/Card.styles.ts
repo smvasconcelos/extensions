@@ -19,7 +19,7 @@ export const CardContainer = styled.div`
   box-sizing: border-box;
   justify-content: space-between;
   transition: all 200ms ease-in-out;
-  ${tw`p-8 absolute left-0 bg-card opacity-0 z-10`}
+  ${tw`p-8 absolute left-0 bg-card/70 opacity-0 z-10 backdrop-blur-sm `}
 `
 
 export const CardButtonContainer = styled.div`

@@ -1,5 +1,6 @@
 
 import $ from "jquery";
+import { userApi } from "../user/user";
 
 export type ManhwaDataType = {
   title: string;
@@ -20,15 +21,17 @@ export const manhwaApi = {
     return await $.get(`https://manhwa-tracker.onrender.com/remove_history?url=${title}&email=${email}`);
   },
   getManhwaHistory: async (): Promise<ManhwaDataType[]> => {
-    return await $.get(`https://manhwa-tracker.onrender.com/get_history`).then(res => {
-      return res.data;
+    const email = await userApi.getUser();
+    if (!email)
+      return [];
+    return await $.get(`https://manhwa-tracker.onrender.com/get_history?&email=${email}`).then(res => {
+      return JSON.parse(res).data.manhwa;
     });
   },
   getManhwaHistorySaved: async (): Promise<ManhwaDataType[] | void> => {
-    // const email = await userApi.getUser();
-    // if (!email)
-    //   return;
-    const email = "smvasconcelos11@gmail.com";
+    const email = await userApi.getUser();
+    if (!email)
+      return;
     return await $.get(`https://manhwa-tracker.onrender.com/get_manhwa?&email=${email}`).then((res) => {
       return JSON.parse(res).data.manhwa;
     });

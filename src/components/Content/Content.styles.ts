@@ -1,7 +1,10 @@
-import tw, { styled } from "twin.macro";
+import tw, { css, styled } from "twin.macro";
 
 export const Wrapper = styled.div`
-  ${tw`w-5/6 max-h-full bg-background p-28`}
+  width: 70%;
+  min-height: 100vh;
+  max-height: fit-content;
+  ${tw` max-h-full bg-background p-28`}
 `
 
 export const ButtonContainer = styled.div`
@@ -11,5 +14,11 @@ export const ButtonContainer = styled.div`
 `
 
 export const CardsContainer = styled.div<{ card: boolean }>`
-  ${({ card }) => card ? tw`flex flex-row gap-10 flex-wrap` : tw`flex flex-col gap-2`}
+  grid-template-columns: repeat(auto-fit, minmax(210px, max-content));
+  ${({ card }) => !card && css`max-height: 60vh;`}
+  ${({ card }) => card ? tw`[grid-gap: 16px] justify-center p-0 grid` : tw`flex flex-col gap-2 overflow-auto p-2`}
+`
+
+export const SearchInput = styled.input`
+  ${tw`shadow appearance-none bg-searchbar  rounded w-full py-2 px-3 text-highlight mb-3 leading-tight focus:shadow-highlight`}
 `

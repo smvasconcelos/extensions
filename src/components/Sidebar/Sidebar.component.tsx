@@ -1,9 +1,23 @@
+import { userApi } from "@/api/user/user";
 import manhwaLogo from "assets/logo.png";
+import { useEffect, useState } from "react";
 import { Button } from "../Button/Button.component";
 import { ButtonContainer, Logo, StatsContainer, StatsItem, StatsText, Wrapper } from "./Sidebar.styles";
 import { ISidebarProps } from "./Sidebar.types";
 
-export function Sidebar({ stats, email }: ISidebarProps): JSX.Element {
+export function Sidebar({ }: ISidebarProps): JSX.Element {
+  const [stats, setStats] = useState<{ manhwaCount: number, historyCount: number }>({ manhwaCount: 0, historyCount: 0 })
+
+  useEffect(() => {
+    const getStats = async () => {
+      const stats = await userApi.getStats();
+      if (!stats)
+        return;
+      setStats(stats);
+    }
+    getStats();
+  }, [])
+
   return <Wrapper>
     <Logo src={manhwaLogo} />
     <ButtonContainer>
@@ -14,13 +28,12 @@ export function Sidebar({ stats, email }: ISidebarProps): JSX.Element {
     <StatsContainer>
       <StatsItem>
         <StatsText>Manhwa List</StatsText>
-        <StatsText>50</StatsText>
+        <StatsText>{stats.manhwaCount}</StatsText>
       </StatsItem>
       <StatsItem>
         <StatsText>History List</StatsText>
-        <StatsText>50</StatsText>
+        <StatsText>{stats.historyCount}</StatsText>
       </StatsItem>
     </StatsContainer>
-
   </Wrapper>
 }

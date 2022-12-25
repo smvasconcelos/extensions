@@ -3,7 +3,7 @@ import tw, { styled } from "twin.macro";
 export const Wrapper = styled.div`
   width: 30%;
   min-height: 100vh;
-  ${tw`bg-sidebar p-5`}
+  ${tw`bg-sidebar p-5 fixed right-0`}
 `
 export const Logo = styled.img`
   width: 80%;

@@ -3,6 +3,6 @@ export interface ICardProps {
   lastChapter: number
   id: string
   imgUrl: string
-  action: (id: string) => void
+  action: () => void
   chapterUrl: string
 }
