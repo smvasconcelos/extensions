@@ -9,3 +9,7 @@ export const ButtonContainer = styled.div`
   margin: 0 auto;
   ${tw`justify-center flex flex-row gap-3 mb-10`}
 `
+
+export const CardsContainer = styled.div<{ card: boolean }>`
+  ${({ card }) => card ? tw`flex flex-row gap-10 flex-wrap` : tw`flex flex-col gap-2`}
+`

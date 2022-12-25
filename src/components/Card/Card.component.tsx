@@ -1,22 +1,17 @@
 import { Button } from "../Button/Button.component";
-import { CardButtonContainer, CardContainer, CardDescription, CardImage, CardTitle, Wrapper } from "./Card.styles";
+import { CardButtonContainer, CardContainer, CardImage, CardTitle, Wrapper } from "./Card.styles";
 import { ICardProps } from "./Card.types";
 
-export function Card({ title, description, lastChapter, id, imgUrl, action }: ICardProps): JSX.Element {
+export function Card({ title, lastChapter, id, imgUrl, action, chapterUrl }: ICardProps): JSX.Element {
   return <Wrapper>
     <CardImage src={imgUrl} />
     <CardContainer>
-      <>
-        <CardTitle>
+      <CardTitle>
           {title}
-        </CardTitle>
-        <CardDescription>
-          {description || 'lorem'}
-        </CardDescription>
-      </>
+      </CardTitle>
       <CardButtonContainer>
-        <Button callback={() => action(id)} text={`Last chatper ${lastChapter}`} />
-        <Button callback={() => alert(id)} text={`Last chatper ${lastChapter}`} />
+        <Button link={chapterUrl} callback={() => action(id)} text={`Chapter ${lastChapter}`} />
+        <Button remove={true} callback={() => alert(id)} text={`Delete`} />
       </CardButtonContainer>
     </CardContainer>
   </Wrapper>

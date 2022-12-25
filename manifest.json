@@ -3,14 +3,6 @@
     "name": "Manhwa tracker",
     "version": "1.9.4",
     "description": "Manhwa Tracker for a few sites",
-    "icons": {
-        "16": "assets/icon128.png",
-        "48": "assets/icon128.png",
-        "128": "assets/icon128.png"
-    },
-    "background": {
-        "service_worker": "scripts/background.js"
-    },
     "action": {
         "default_title": "Manhwa Tracker",
         "default_popup": "index.html"
@@ -22,10 +14,9 @@
         "matches": ["<all_urls>"],
         "run_at": "document_start",
         "js": [
-            "scripts/jquery.min.js",
-            "scripts/ajax.min.js",
-            "scripts/base64.min.js",
-            "contentScript.js"
-        ]
+          "jquery.min.js",
+          "ContentScripts.js"
+        ],
+        "css": ["app.css"]
     }]
 }

@@ -1,5 +1,4 @@
 export interface ICardProps {
-  description?: string
   title: string
   lastChapter: number
   id: string
