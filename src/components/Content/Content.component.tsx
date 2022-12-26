@@ -37,12 +37,23 @@ export function Content({ }: IContentProps): JSX.Element {
       const hdata = await manhwaApi.getManhwaHistory();
       if (!data)
         return
-      setManhwaHistory(data);
-      setManhwaHistoryBackup(data);
+      setManhwaHistory(hdata);
+      setManhwaHistoryBackup(hdata);
       await userApi.setStats(data.length, hdata.length);
     }
     getData();
   }, []);
+
+  const removeFromDOM = (item: object) => {
+    var data = manhwaData.filter((val) => {
+      return val !== item ? val : null;
+    })
+    setManhwaData(data);
+    data = manhwaDataBackup.filter((val) => {
+      return val !== item ? val : null;
+    })
+    setManhwaDataBackup(data);
+  }
 
   const listCard = (): JSX.Element => {
     return (
@@ -52,7 +63,11 @@ export function Content({ }: IContentProps): JSX.Element {
             return (
               <Card
                 key={`${item.title}-manhwa-${idx}`}
-                action={async () => await manhwaApi.removeManhwa(item.title, await userApi.getUser())}
+                action={async () => {
+                  await manhwaApi.removeManhwa(item, await userApi.getUser()).then(() => {
+                    removeFromDOM(item);
+                  })
+                }}
                 id={item.id}
                 lastChapter={item.chapter}
                 chapterUrl={item.title}

@@ -12,10 +12,21 @@ export type ManhwaDataType = {
 }
 
 export const manhwaApi = {
-  removeManhwa: async (title: string, email: string) => {
-    return await $.get(`https://manhwa-tracker.onrender.com/remove_manhwa?url=${title}&email=${email}`).then((res) => { }).catch(err => {
-      return err;
-    });
+  removeManhwa: async (data: object, email: string) => {
+    return await $.ajax({
+      url: `https://manhwa-tracker.onrender.com/remove_manhwa`,
+      type: "POST",
+      contentType: 'application/json',
+      crossDomain: true,
+      data: JSON.stringify({
+        email: email,
+        data: data
+      }),
+      dataType: 'json',
+      processData: false,
+    }).then((res) => {
+      return res;
+    })
   },
   removeManhwaHistory: async (title: string, email: string) => {
     return await $.get(`https://manhwa-tracker.onrender.com/remove_history?url=${title}&email=${email}`);
