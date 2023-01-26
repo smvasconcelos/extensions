@@ -8,8 +8,8 @@ ReactDOM.render(
   <Router>
     <GlobalStyles />
     <Routes>
-      <Route path="/home" element={<Home />} />
       <Route path="/" element={<PopupPage />} />
+      <Route path="/home" element={<Home />} />
     </Routes>
   </Router>,
   document.getElementById('root')

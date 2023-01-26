@@ -1,4 +1,5 @@
 const AMBIENT = import.meta.env.VITE_AMBIENT;
+
 export const userApi = {
   logInLocal: async (email: string): Promise<void> => {
     if (AMBIENT == 'DEV') return
