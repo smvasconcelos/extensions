@@ -1,12 +1,16 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import { GlobalStyles } from 'twin.macro'
-import { Home } from './pages/Home/Home.page'
+import ReactDOM from 'react-dom';
+import { HashRouter as Router, Route, Routes } from "react-router-dom";
+import { GlobalStyles } from 'twin.macro';
+import { Home } from './pages/Home/Home.page';
+import { PopupPage } from './pages/Popup/Popup.page';
 
-ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
-  <React.StrictMode>
+ReactDOM.render(
+  <Router>
     <GlobalStyles />
-    {/* <PopupPage /> */}
-    <Home />
-  </React.StrictMode>,
-)
+    <Routes>
+      <Route path="/home" element={<Home />} />
+      <Route path="/" element={<PopupPage />} />
+    </Routes>
+  </Router>,
+  document.getElementById('root')
+);
