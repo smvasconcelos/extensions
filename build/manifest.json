@@ -5,7 +5,7 @@
     "description": "Manhwa Tracker for a few sites",
     "action": {
         "default_title": "Manhwa Tracker",
-        "default_popup": "index.html"
+        "default_popup": "./src/index.html"
     },
     "permissions": [
         "storage"
@@ -20,6 +20,6 @@
           "./src/lib/user.js",
           "./src/scripts/ContentScripts.js"
         ],
-        "css": ["app.css"]
+        "css": ["./src/app.css"]
     }]
 }

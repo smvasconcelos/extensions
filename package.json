@@ -20,7 +20,8 @@
     "react-new-window": "^1.0.1",
     "react-router-dom": "6",
     "styled-components": "^5.3.6",
-    "vite-tsconfig-paths": "^4.0.3"
+    "vite-tsconfig-paths": "^4.0.3",
+    "yarn": "^1.22.19"
   },
   "devDependencies": {
     "@types/chrome": "^0.0.206",
