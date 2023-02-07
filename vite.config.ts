@@ -3,7 +3,6 @@ import { crx } from '@crxjs/vite-plugin'
 import react from '@vitejs/plugin-react'
 import { defineConfig } from 'vite'
 import tsconfigPaths from 'vite-tsconfig-paths'
-import { createBuild } from './cleanBuild'
 import manifest from './manifest.json'
 
 export default defineConfig({
@@ -22,12 +21,6 @@ export default defineConfig({
       },
     }),
     crx({ manifest }),
-    tsconfigPaths(),
-    {
-      name: 'build-end',
-      closeBundle: () => {
-        createBuild()
-      }
-    },
+    tsconfigPaths()
   ],
 })
