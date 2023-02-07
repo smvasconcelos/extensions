@@ -1,9 +1,11 @@
 // vite.config.ts
+import { crx } from '@crxjs/vite-plugin'
 import react from '@vitejs/plugin-react'
 import { defineConfig } from 'vite'
 import tsconfigPaths from 'vite-tsconfig-paths'
+import { createBuild } from './cleanBuild'
+import manifest from './manifest.json'
 
-// https://vitejs.dev/config/
 export default defineConfig({
   optimizeDeps: {
     esbuildOptions: {
@@ -11,7 +13,6 @@ export default defineConfig({
     },
   },
   esbuild: {
-    // https://github.com/vitejs/vite/issues/8644#issuecomment-1159308803
     logOverride: { 'this-is-undefined-in-esm': 'silent' },
   },
   plugins: [
@@ -20,6 +21,13 @@ export default defineConfig({
         plugins: ['babel-plugin-macros', 'babel-plugin-styled-components'],
       },
     }),
-    tsconfigPaths()
+    crx({ manifest }),
+    tsconfigPaths(),
+    {
+      name: 'build-end',
+      closeBundle: () => {
+        createBuild()
+      }
+    },
   ],
 })

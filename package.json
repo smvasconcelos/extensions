@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build && node cleanBuild.cjs",
+    "build": "tsc && vite build --watch",
     "preview": "vite preview"
   },
   "dependencies": {
@@ -24,6 +24,7 @@
     "yarn": "^1.22.19"
   },
   "devDependencies": {
+    "@crxjs/vite-plugin": "^2.0.0-beta.12",
     "@types/chrome": "^0.0.206",
     "@types/fuzzy-search": "^2.1.2",
     "@types/jquery": "^3.5.14",
@@ -31,6 +32,7 @@
     "@types/react-dom": "^18.0.9",
     "@types/react-router-dom": "^5.3.3",
     "@types/styled-components": "^5.1.26",
+    "@vite/vitejs-client": "^2.2.10",
     "@vitejs/plugin-react": "^3.0.0",
     "autoprefixer": "^10.4.13",
     "babel-plugin-macros": "^3.1.0",

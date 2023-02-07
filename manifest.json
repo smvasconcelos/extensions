@@ -13,13 +13,6 @@
     "content_scripts": [{
         "matches": ["<all_urls>"],
         "run_at": "document_start",
-        "js": [
-          "./src/scripts/ajax.min.js",
-          "./src/scripts/jquery.min.js",
-          "./src/lib/manhwa.js",
-          "./src/lib/user.js",
-          "./src/scripts/ContentScripts.js"
-        ],
-        "css": ["app.css"]
+        "js": ["src/pages/ContentScript/ContentScript.page.tsx"]
     }]
 }
