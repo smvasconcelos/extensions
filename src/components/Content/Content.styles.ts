@@ -20,6 +20,6 @@ export const CardsContainer = styled.div<{ card: boolean }>`
 `
 
 export const SearchInput = styled.input`
-  color: #cdcdcd;
+  color: #000;
   ${tw`shadow appearance-none bg-searchbar  rounded w-full py-2 px-3 mb-3 leading-tight focus:shadow-highlight`}
 `
