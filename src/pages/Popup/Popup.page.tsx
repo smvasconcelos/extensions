@@ -1,7 +1,7 @@
+import { api } from "@/api/server";
 import { userApi } from "api/user/user";
 import manhwaLogo from "assets/logo.png";
 import { Button } from "components/Button/Button.component";
-import $ from "jquery";
 import { useEffect, useState } from "react";
 import { useHref } from "react-router-dom";
 import { ButtonContainer, EmailInput, Logo, Wrapper } from "./Popup.styles";
@@ -21,17 +21,23 @@ export function PopupPage(): JSX.Element {
     }
     getUser();
   }, []);
-
+  // https://manhwa-tracker.onrender.com/check_and_create_user/?&email=smvasconcelos11@gmail.com
   const openHome = () => {
     const AMBIENT = import.meta.env.VITE_AMBIENT;
     if (email === '') return
-    $.get(`https://manhwa-tracker.onrender.com/check_and_create_user/?&email=${email}`).then((res) => {
+    api.get('check_and_create_user', {
+      data: {
+        email: email
+      }
+    }).then(() => {
+
       userApi.logInLocal(email);
       setUser(email);
       setEmail(email);
       if (AMBIENT == 'DEV') return
       window.open(homeHref, '_blank')
       window.close();
+
     }).catch((res) => {
       setUser('');
     })

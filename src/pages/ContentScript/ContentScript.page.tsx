@@ -45,7 +45,6 @@ export function ContentScript(): JSX.Element {
     }
   }, [])
 
-
   return isTracker ? <Wrapper>
     <ActionButton onClick={addManhwaToFirebase} src={chrome.runtime.getURL(logoAction)} />
   </Wrapper> : <></>
