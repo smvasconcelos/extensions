@@ -1,4 +1,5 @@
 
+import $ from 'jquery';
 import { api } from "../server";
 import { userApi } from "../user/user";
 
@@ -48,19 +49,25 @@ export const manhwaApi = {
       return;
     return await api.get('get_manhwa', {
       params: {
-        email: 'smvasconcelos11@gmail.com'
+        email: email
       }
     }).then(res => {
       return res.data.data.manhwa
     })
   },
   addManhwa: async (title: string, email: string, data: object) => {
-    return api.post('add_manhwa', {
-      params: JSON.stringify({
+    return await $.ajax({
+      url: `https://manhwa-tracker.onrender.com/add_manhwa`,
+      type: "POST",
+      contentType: 'application/json',
+      crossDomain: true,
+      data: JSON.stringify({
         url: title,
         email: email,
         ...data
-      })
+      }),
+      dataType: 'json',
+      processData: false,
     }).then((res) => {
       console.log({ res });
       return res;

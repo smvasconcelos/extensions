@@ -1,3 +1,4 @@
+import $ from 'jquery';
 
 const readm = async (path: string) => {
   if (path === "/" || !path.includes("/manga/")) {

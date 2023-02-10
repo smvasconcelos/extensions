@@ -1,4 +1,5 @@
 import { manhwaApi } from '@/api/manhwa/manhwa';
+import { userApi } from '@/api/user/user';
 import logoAction from 'assets/icon128.png';
 import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
@@ -8,7 +9,6 @@ import { getManhwaInfo } from './useContentScript';
 export function ContentScript(): JSX.Element {
 
   const [isTracker, setIsTracker] = useState(false);
-  const [user, setUser] = useState('');
 
   const tracker = [
     "readm",
@@ -20,11 +20,11 @@ export function ContentScript(): JSX.Element {
   ];
 
   const addManhwaToFirebase = async () => {
-    // const user = "smvasconcelos11@gmail.com";
-    if (user !== "") {
+    const email = await userApi.getUser();
+    if (email !== "") {
       const title = window.location.href;
-      const email = user;
       const data = await getManhwaInfo();
+      console.log({ data });
 
       if (data)
         await manhwaApi.addManhwa(title, email, data);
@@ -32,21 +32,18 @@ export function ContentScript(): JSX.Element {
   }
 
   useEffect(() => {
-    if (tracker.some((item) => window.location.hostname.includes(item))) {
-      chrome.storage.onChanged.addListener(async function (changes, namespace) {
-        for (let [key, { oldValue, newValue }] of Object.entries(changes)) {
-          if (key === "email") {
-            await manhwaApi.addManhwaHistory(window.location.href, user);
-            setUser(newValue);
-            setIsTracker(true);
-          }
-        }
-      });
+    const startTracker = async () => {
+      if (tracker.some((item) => window.location.hostname.includes(item))) {
+        const user = await userApi.getUser();
+        setIsTracker(true);
+        await manhwaApi.addManhwaHistory(window.location.href, user);
+      }
     }
+    startTracker();
   }, [])
 
   return isTracker ? <Wrapper>
-    <ActionButton onClick={addManhwaToFirebase} src={chrome.runtime.getURL(logoAction)} />
+    <ActionButton onClick={() => addManhwaToFirebase()} src={chrome.runtime.getURL(logoAction)} />
   </Wrapper> : <></>
 }
 const root = document.createElement('div')
