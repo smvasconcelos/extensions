@@ -230,7 +230,7 @@ async function get_manhwa(request, response) {
 		data.id = manhwa.id;
 		response.send(JSON.stringify({ message: "Manhwa listed successfully", status: 200, data: data }));
 	}).catch((e) => {
-		response.send(JSON.stringify({ message: "Error deleting manhwa", status: 500, error: e }));
+    response.send(JSON.stringify({ message: "Error listing manhwa", status: 500, error: e }));
 	});
 }
 
@@ -244,7 +244,7 @@ async function get_history(request, response) {
 		data.id = history.id;
 		response.send(JSON.stringify({ message: "Manhwa listed successfully", status: 200, data: history.data() }));
 	}).catch((e) => {
-		response.send(JSON.stringify({ message: "Error deleting manhwa", status: 500, error: e }));
+    response.send(JSON.stringify({ message: "Error listing manhwa history", status: 500, error: e }));
 	});
 }
 
