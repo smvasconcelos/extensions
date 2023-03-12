@@ -25,3 +25,4 @@ firebase.json
 yarn.lock
 serviceAccountKey.json
 .env
+*.pem

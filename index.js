@@ -173,8 +173,8 @@ async function add_manhwa(request, response) {
 app.post('/remove_manhwa', cors(), remove_manhwa);
 
 async function remove_manhwa(request, response) {
-	const data = request.body.data || "";
-	const email = request.body.email || "";
+  const data = request.body.data.data || "";
+  const email = request.body.data.email || "";
 	const key = btoa(email);
 	await manhwaRef.doc(key).update({
 		manhwa: admin.firestore.FieldValue.arrayRemove({
