@@ -1,7 +1,8 @@
 import axios from "axios";
+const AMBIENT = import.meta.env.VITE_AMBIENT;
 
 export const api = axios.create({
-  baseURL: 'https://manhwa-tracker.onrender.com/',
+  baseURL: 'http://15.228.192.247:8080/',
   timeout: 20000,
   headers: {
     'Access-Control-Allow-Origin': '*',

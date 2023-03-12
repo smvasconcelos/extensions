@@ -21,7 +21,7 @@ export function PopupPage(): JSX.Element {
     }
     getUser();
   }, []);
-  // https://manhwa-tracker.onrender.com/check_and_create_user/?&email=smvasconcelos11@gmail.com
+  // https://https://15.228.192.247:8080/check_and_create_user/?&email=smvasconcelos11@gmail.com
   const openHome = () => {
     const AMBIENT = import.meta.env.VITE_AMBIENT;
     if (email === '') return

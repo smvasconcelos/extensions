@@ -15,10 +15,10 @@ export interface ManhwaDataType {
 export const manhwaApi = {
   removeManhwa: async (data: object, email: string) => {
     return await api.post('remove_manhwa', {
-      params: JSON.stringify({
+      data: {
         email: email,
         data: data
-      })
+      },
     }).then((res) => {
       return res;
     })
@@ -57,7 +57,7 @@ export const manhwaApi = {
   },
   addManhwa: async (title: string, email: string, data: object) => {
     return await $.ajax({
-      url: `https://manhwa-tracker.onrender.com/add_manhwa`,
+      url: `https://https://15.228.192.247:8080/add_manhwa`,
       type: "POST",
       contentType: 'application/json',
       crossDomain: true,

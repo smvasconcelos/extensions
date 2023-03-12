@@ -16,7 +16,14 @@ export function Sidebar({ }: ISidebarProps): JSX.Element {
       setStats(stats);
     }
     getStats();
-  }, [])
+  }, [stats])
+
+  function openAll() {
+    const links = ['https://reaperscans.com', 'https://asurascans.com', 'https://readm.org'];
+    links.map((link) => {
+      window.open(link, "_blank");
+    });
+  }
 
   return <Wrapper>
     <Logo src={manhwaLogo} />
@@ -24,6 +31,7 @@ export function Sidebar({ }: ISidebarProps): JSX.Element {
       <Button link="https://reaperscans.com" text="Reaper Scans" />
       <Button link="https://asurascans.com" text="Asura Scans" />
       <Button link="https://readm.org" text="Readm" />
+      <Button callback={openAll} text="Open All" />
     </ButtonContainer>
     <StatsContainer>
       <StatsItem>
