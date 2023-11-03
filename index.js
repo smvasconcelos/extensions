@@ -1,5 +1,6 @@
 require('dotenv').config();
 const admin = require("firebase-admin");
+
 const fireApp = admin.initializeApp({
 	credential: admin.credential.cert({
 		"type": process.env.FIREBASE_type,
@@ -14,6 +15,7 @@ const fireApp = admin.initializeApp({
 		"client_email": process.env.FIREBASE_client_email,
 	})
 });
+
 const firestoreAdmin = admin.firestore();
 
 const manhwaRef = firestoreAdmin.collection('manhwa');
@@ -175,6 +177,17 @@ app.post('/remove_manhwa', cors(), remove_manhwa);
 async function remove_manhwa(request, response) {
   const data = request.body.data.data || "";
   const email = request.body.data.email || "";
+  // const data ={
+  //   card:true,
+  //   chapter:"92050534810",
+  //   date:"03/11/2023",
+  //   img:"https://img.asuracomics.com/unsafe/fit-in/720x936/https://asuratoon.com/wp-content/uploads/2021/07/solomaxlevelnewbie.jpg",
+  //   name:"Solo Max-Level Newbie",
+  //   title:"https://asuratoon.com/9205053481-solo-max-level-newbie-chapter-0/"
+  // }
+
+  // const email = "smvasconcelos11@gmail.com";
+
 	const key = btoa(email);
 	await manhwaRef.doc(key).update({
 		manhwa: admin.firestore.FieldValue.arrayRemove({
