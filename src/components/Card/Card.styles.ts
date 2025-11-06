@@ -7,6 +7,7 @@ export const CardTitle = styled.p`
 export const CardImage = styled.img`
   width: 200px;
   height: 100%;
+  min-height: 288px;
   ${tw`rounded`}
 `
 

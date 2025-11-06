@@ -1,15 +1,16 @@
 'use strict';
 
-// import { addManhwa, addManhwaHistory, getManhwaInfo } from "./lib/manhwa.js";
-// import { getUser } from "./lib/user.js";
-
 const tracker = [
   "readm",
-  "asura",
+  "asuracomic",
   "reaperscans",
   "mangakakalot",
   "readmanganato",
-  "mangasee123"
+  "mangasee123",
+  "mangagalaxy",
+  "manhwaclan",
+  "mangadex",
+  "nightsup"
 ];
 
 
@@ -25,16 +26,19 @@ const setAction = async (user) => {
     `);
 
     $("body").on("click", "div.action-container", async function (e) {
-      const user = await getUser();
       // const user = "smvasconcelos11@gmail.com";
-      if (user !== "") {
-        const title = window.location.href;
-        const email = user;
-        const data = await getManhwaInfo();
+      const title = window.location.href;
+      const email = user;
+      let data = undefined;
 
-        if (data)
-          await addManhwa(title, email, data);
+      try {
+        data = await getManhwaInfo();
+      } catch (e) {
+        console.error('Erro getting manhwa info', e);
       }
+
+      if (data)
+        await addManhwa(title, email, data);
     });
 
   } else {

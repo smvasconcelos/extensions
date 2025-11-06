@@ -11,7 +11,6 @@ function copyFromDir(startPath, filter) {
   }
 
   var files = fs.readdirSync(localPath);
-  console.log(files);
 
   for (var i = 0; i < files.length; i++) {
     const filename = path.join(localPath, files[i]);

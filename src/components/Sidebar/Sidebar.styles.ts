@@ -34,4 +34,5 @@ export const ButtonContainer = styled.div`
   width: 100%;
   margin: 0 auto;
   ${tw`justify-center flex flex-row gap-3 mb-10`}
+  flex-wrap: wrap;
 `

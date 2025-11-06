@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build && node cleanBuild.cjs",
+    "build": "vite build && node cleanBuild.cjs",
+    "build_linux": "vite build && node cleanBuild.cjs",
     "preview": "vite preview"
   },
   "dependencies": {

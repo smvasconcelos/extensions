@@ -1,6 +1,6 @@
 const addManhwa = async (title, email, data) => {
   return await $.ajax({
-    url: `https://manhwa-tracker.onrender.com/add_manhwa`,
+    url: `${import.meta.env.VITE_API_URL}add_manhwa`,
     type: "POST",
     contentType: 'application/json',
     crossDomain: true,
@@ -20,24 +20,21 @@ const addManhwa = async (title, email, data) => {
     return err;
   });
 }
-
 const removeManhwa = async (title, email) => {
-  return await $.get(`https://manhwa-tracker.onrender.com/remove_manhwa?url=${title}&email=${email}`).then((res) => { }).catch(err => {
+  return await $.get(`${import.meta.env.VITE_API_URL}remove_manhwa?url=${title}&email=${email}`).then((res) => { }).catch(err => {
     return err;
   });
 }
-
 const addManhwaHistory = async (title, email) => {
-  return await $.get(`https://manhwa-tracker.onrender.com/add_history?url=${title}&email=${email}`).then((res) => {
+  return await $.get(`${import.meta.env.VITE_API_URL}add_history?url=${title}&email=${email}`).then((res) => {
     console.log(res);
     return res;
   }).catch(err => {
     return err;
   });
 }
-
 const removeManhwaHistory = async (title, email) => {
-  return await $.get(`https://manhwa-tracker.onrender.com/remove_history?url=${title}&email=${email}`).then((res) => {
+  return await $.get(`${import.meta.env.VITE_API_URL}remove_history?url=${title}&email=${email}`).then((res) => {
     return res;
   }).catch(err => {
     return err;
@@ -45,7 +42,7 @@ const removeManhwaHistory = async (title, email) => {
 }
 
 const getManhwaHistory = async (title, email) => {
-  return await $.get(`https://manhwa-tracker.onrender.com/get_history`).then((res) => {
+  return await $.get(`${import.meta.env.VITE_API_URL}get_history`).then((res) => {
     return res;
   }).catch(err => {
     return err;
@@ -84,9 +81,9 @@ const readm = async (path) => {
   }
 }
 
-const asura = async (path) => {
-  console.log(path.replace(/[^0-9]/g, ""));
-  if (path === "/" || !path.includes("/manga/") && !path.includes("chapter")) {
+
+const asuracomic = async (path) => {
+  if (path === "/" || !path.includes("chapter")) {
     return {
       chapter: "",
       name: "",
@@ -94,24 +91,20 @@ const asura = async (path) => {
       card: false,
     }
   } else {
-    if (path.length <= 1) {
-      var url = window.location.href;
-      var chapter = "";
-    } else {
-      var url = $("div.allc a").attr("href");
-      chapter = path.replace(/[^0-9]/g, "");
-    }
+    var url = window.location.href.split('/').splice(0, 5).join('/');
+    var chapterString = path.split('/');
+    chapter = chapterString[chapterString.length - 1];
+
     return await $.ajax(url).then((res) => {
       const html = $($.parseHTML(res));
-      const name = html.find("h1.entry-title").html();
-      const img = html.find("div.thumb > img.wp-post-image").attr("src");
+      const name = html.find("span.text-xl").html();
+      const img = html.find("img.rounded").attr("src");
       const data = {
         chapter: chapter,
         name: name,
         img: img,
         card: true,
       };
-      console.log(data);
       return data;
     });
   }
@@ -136,12 +129,12 @@ const reaper = async (path) => {
       var url = window.location.origin;
       url = `${url}${path.split("/").splice(0, 3).join("/")}`;
       var chapter = path.split('/')
-      chapter = chapter[chapter.length - 1].split('-')[2];
+      chapter = chapter[chapter.length - 1].split('-')[1];
     }
     return await $.ajax(url).then((res) => {
       const html = $($.parseHTML(res));
-      const name = html.find("div.flex h1").html().replace(/[\n\r]/g, '');
-      var img = html.find("img.h-full").attr("src")
+      const name = html.find("div.flex > h1.text-xl").html().replace(/[\n\r]/g, '');
+      var img = html.find("div.bg-background > img").attr("src")
       const data = {
         chapter: chapter,
         name: name,
@@ -196,20 +189,49 @@ const mangasee = async (path) => {
       card: false,
     }
   } else {
-    if (!path.includes("read-online")) {
-      var url = window.location.href;
-      var chapter = "";
-    } else {
-      var url = window.location.origin;
-      var title = path.split("/")[2].split("-");
-      chapter = title[title.length - 3];
-      title = title.slice(0, title.length - 4).join("-");
-      url = `${url}/manga/${title}`;
-    }
+    var url = window.location.origin;
+    var title = path.split("/");
+    chapter = title[2].split("-").pop().replace(".html", "");
+    title = title[2].split("-");
+    title = title.splice(0, title.length - 2).join("-");
+    url = `${url}/manga/${title}`;
+
     return await $.ajax(url).then((res) => {
       const html = $($.parseHTML(res));
-      const name = html.find("div.BoxBody h1").html();
-      const img = html.find("div.BoxBody > div > div > img").attr("src");
+      const name = html.find(".Box h1").html();
+      const img = html.find(".BoxBody > div > div > img").attr("src");
+
+      const data = {
+        chapter: chapter,
+        name: name,
+        img: img,
+        card: true,
+      };
+      console.log({ data })
+      return data;
+    });
+  }
+}
+
+const galaxy = async (path) => {
+  if (path === "/" || path.includes("series")) {
+    return {
+      chapter: "",
+      name: "",
+      img: "",
+      card: false,
+    }
+  } else {
+    var url = window.location.origin;
+    var title = path.split("/")[1].split("-");
+    chapter = title[title.length - 1];
+    title = title.slice(0, title.length - 2).join("-");
+    url = `${url}/manga/${title}/`;
+
+    return await $.ajax(url).then((res) => {
+      const html = $($.parseHTML(res));
+      const name = html.find("h1.entry-title").html();
+      const img = html.find(".info-left-margin > div > img").attr("src");
       const data = {
         chapter: chapter,
         name: name,
@@ -221,33 +243,121 @@ const mangasee = async (path) => {
   }
 }
 
+
+const manhwaclan = async (path) => {
+  if (path === "/" || !path.includes("chapter")) {
+    return {
+      chapter: "",
+      name: "",
+      img: "",
+      card: false,
+    }
+  } else {
+    var url = window.location.origin;
+    var data = path.split("/");
+    var title = data[2];
+    chapter = data[3].split('-')[1];
+    url = `${url}/manga/${title}/`;
+
+    return await $.ajax(url).then((res) => {
+      const html = $($.parseHTML(res));
+      const name = html.find("div.post-title > h1").html();
+      const img = html.find(".summary_image img").attr("src");
+      const data = {
+        chapter: chapter,
+        name: name,
+        img: img,
+        card: true,
+      };
+      return data;
+    });
+  }
+}
+
+const mangaDex = async (path) => {
+  if (path === "/" || !path.includes("chapter")) {
+    return {
+      chapter: "",
+      name: "",
+      img: "",
+      card: false,
+    }
+  } else {
+
+    const url = document.querySelector('.reader--header a').href;
+    const chapter = document.querySelector(".reader--meta.chapter").innerHTML.replace(/\D/g, '');
+
+    return await $.ajax(url).then((res) => {
+      const html = $($.parseHTML(res));
+      const img = html.find("img").attr("src");
+      const name = html.find("p").html();
+
+      const data = {
+        chapter,
+        name,
+        img,
+        card: true,
+      };
+
+      console.log({
+        img: html.find("img"),
+        name: html.find("p"),
+        html
+      });
+      return data;
+    });
+  }
+}
+
+const nightScans = async (path) => {
+  const url = document.querySelector('div.headpost > div > a').href;
+  const chapter = $("#chapter option:selected").html().replace(/\D/g, '');
+
+  return await $.ajax(url).then((res) => {
+    const html = $($.parseHTML(res));
+    const img = html.find("div.thumb > noscript > img").attr("src");
+    const name = html.find(".entry-title").html();
+
+    const data = {
+      chapter,
+      name,
+      img,
+      card: true,
+    };
+    return data;
+  });
+}
+
 const getInfo = {
   0: readm,
-  1: asura,
+  1: asuracomic,
   2: reaper,
   3: kakalot,
   4: kakalot,
   5: mangasee,
+  6: galaxy,
+  7: manhwaclan,
+  8: mangaDex,
+  9: nightScans
 }
 
 const getManhwaInfo = async (url) => {
   const origin = window.location.hostname;
   const type = [
     "readm",
-    "asura",
+    "asuracomic",
     "reaperscans",
     "mangakakalot",
     "readmanganato",
-    "mangasee123"
+    "mangasee123",
+    "mangagalaxy",
+    "manhwaclan",
+    "mangadex",
+    "nightsup"
   ];
+
   const option = type.filter((item, index) => {
     if (origin.includes(item)) {
-      if (item === "readm" && origin.includes("readmanganato"))
-        return false
-      if (item === "reaperscans" && origin.includes("asura"))
-        return false
-      if (item === "asura" && origin.includes("reaperscans"))
-        return false
       return item;
     } else
       return false
@@ -255,7 +365,5 @@ const getManhwaInfo = async (url) => {
 
   const path = window.location.pathname;
   const index = type.indexOf(option);
-  // console.log(getInfo[index])
   return await getInfo[index](path);
-
 }

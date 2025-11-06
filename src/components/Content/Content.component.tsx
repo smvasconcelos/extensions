@@ -17,10 +17,6 @@ export function Content({ }: IContentProps): JSX.Element {
   const [manhwaHistoryBackup, setManhwaHistoryBackup] = useState<ManhwaDataType[]>([]);
   const [search, setSearch] = useState('');
 
-  const manhwaSearch = new FuzzySearch(manhwaDataBackup || [], ['name', 'chapter'], {
-    caseSensitive: false,
-  });
-
   const manhwaHistorySearch = new FuzzySearch(manhwaHistoryBackup || [], ['title', 'date'], {
     caseSensitive: false,
   });
@@ -28,9 +24,11 @@ export function Content({ }: IContentProps): JSX.Element {
   useEffect(() => {
 
     const getData = async () => {
-      const data = await manhwaApi.getManhwaHistorySaved();
+      let data = await manhwaApi.getManhwaHistorySaved();
+
       if (!data)
         return
+
       setManhwaData(data);
       setManhwaDataBackup(data);
 
@@ -122,8 +120,14 @@ export function Content({ }: IContentProps): JSX.Element {
     setSearch(value);
     if (tab == 1)
       setManhwaHistory(manhwaHistorySearch.search(value));
-    else
-      setManhwaData(manhwaSearch.search(value));
+    else {
+      if (value === '') {
+        setManhwaData(manhwaDataBackup);
+        return;
+      }
+
+      setManhwaData(manhwaData.filter(item => item.name.toUpperCase().indexOf(value.toUpperCase()) > -1));
+    }
   }
 
   return <Wrapper>

@@ -24,8 +24,10 @@ export function PopupPage(): JSX.Element {
 
   const openHome = () => {
     const AMBIENT = import.meta.env.VITE_AMBIENT;
+    const API_URL = import.meta.env.VITE_API_URL;
+
     if (email === '') return
-    $.get(`https://manhwa-tracker.onrender.com/check_and_create_user/?&email=${email}`).then((res) => {
+    $.get(`${API_URL}/check_and_create_user/?&email=${email}`).then((res) => {
       userApi.logInLocal(email);
       setUser(email);
       setEmail(email);
@@ -39,6 +41,7 @@ export function PopupPage(): JSX.Element {
 
   return <Wrapper>
     <Logo {...user !== '' && { onClick: () => AMBIENT ? '' : chrome.tabs.create({ url: chrome.runtime.getURL("./home/index.html") }) }} src={manhwaLogo} />
+
     <EmailInput
       disabled={user !== ''}
       value={email}
@@ -53,6 +56,7 @@ export function PopupPage(): JSX.Element {
           if (AMBIENT == 'DEV') return
           window.close();
         }} />
+
         <Button text="Open Collection" callback={() => window.open(homeHref, '_blank')} />
       </ButtonContainer>
     }
