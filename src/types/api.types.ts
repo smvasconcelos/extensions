@@ -32,11 +32,9 @@ export interface RemoveHistoryRequestBody {
 	email: string;
 }
 
-export interface TypedRequest<T = Record<string, never>> extends Request {
-	body: T;
-	query: RequestQuery;
-}
+export interface TypedRequest<T = Record<string, never>>
+  extends Request<{}, any, T, RequestQuery> {}
 
 export interface TypedResponse<T> extends Response {
-	send: (body: string | ApiResponse<T>) => Response;
+  send: (body: ApiResponse<T>) => this;
 }

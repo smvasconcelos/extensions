@@ -1,0 +1,11 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const manhwa_controller_1 = require("../controller/manhwa.controller");
+const router = (0, express_1.Router)();
+const controller = new manhwa_controller_1.ManhwaController();
+router.get('/check_and_create_user', (req, res) => controller.checkAndCreateUser(req, res));
+router.post('/add_manhwa', (req, res) => controller.addManhwa(req, res));
+router.post('/remove_manhwa', (req, res) => controller.removeManhwa(req, res));
+router.get('/get_manhwa', (req, res) => controller.getManhwa(req, res));
+exports.default = router;
