@@ -1,7 +1,7 @@
 require('dotenv').config();
 const admin = require("firebase-admin");
 
-const fireApp = admin.initializeApp({
+admin.initializeApp({
 	credential: admin.credential.cert({
 		"type": process.env.FIREBASE_type,
 		"project_id": process.env.FIREBASE_project_id,
@@ -25,17 +25,9 @@ const express = require('express');
 const app = express();
 const cors = require('cors');
 
-app.use(function (req, res, next) {
-	res.header("Access-Control-Allow-Origin", '*');
-	res.header("Access-Control-Allow-Credentials", true);
-	res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
-	res.header("Access-Control-Allow-Headers", 'Origin,X-Requested-With,Content-Type,Accept,content-type,application/json');
-	next();
-});
-
 app.use(express.json())
 
-app.use(cors({ origin: "*" }))
+app.use(cors({ origin: "*" }));
 
 app.get('/check_and_create_user', cors(), check_and_create_user);
 
@@ -199,6 +191,7 @@ async function remove_manhwa(request, response) {
 		response.send(JSON.stringify({ message: "Error removing manhwa", status: 500, error: e }));
 	});
 }
+
 app.get('/add_history', cors(), add_history);
 
 async function add_history(request, response) {
@@ -216,6 +209,7 @@ async function add_history(request, response) {
 		response.send(JSON.stringify({ message: "Error adding manhwa", status: 500, error: e }));
 	});
 }
+
 app.post('/remove_history', cors(), remove_history);
 
 async function remove_history(request, response) {
@@ -252,11 +246,12 @@ app.get('/get_history', cors(), get_history);
 async function get_history(request, response) {
 	const email = request.query.email;
 	const key = btoa(email);
+
 	await historyRef.doc(key).get().then((history) => {
 		var data = history.data();
 		data.id = history.id;
 		response.send(JSON.stringify({ message: "Manhwa listed successfully", status: 200, data: history.data() }));
-	}).catch((e) => {
+	}).catch((e) => { 
     response.send(JSON.stringify({ message: "Error listing manhwa history", status: 500, error: e }));
 	});
 }

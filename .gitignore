@@ -7,6 +7,10 @@
 
 # testing
 /coverage
+*.test.js
+*.test.js.map
+*.spec.js
+*.spec.js.map
 
 # production
 /build
