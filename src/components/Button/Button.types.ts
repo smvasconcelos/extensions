@@ -1,6 +1,8 @@
+import { ReactNode } from "react"
+
 export interface IButtonProps {
-  text: string
+  children: ReactNode
   link?: string
-  remove?: boolean
+  isActive?: boolean
   callback?: () => void
 }

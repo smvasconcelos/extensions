@@ -1,12 +1,11 @@
 import { manhwaApi, ManhwaDataType } from "@/api/manhwa/manhwa";
 import { userApi } from "@/api/user/user";
-import FuzzySearch from "fuzzy-search";
 import { useEffect, useState } from "react";
 import { MutatingDots } from "react-loader-spinner";
 import { Button } from "../Button/Button.component";
 import { Card } from "../Card/Card.component";
 import { HistoryItem } from "../HistoryItem/HistoryItem.component";
-import { ButtonContainer, CardsContainer, SearchInput, Wrapper } from "./Content.styles";
+import { ButtonContainer, ContentContainer, SearchInput, Wrapper } from "./Content.styles";
 import { IContentProps } from "./Content.types";
 
 export function Content({ }: IContentProps): JSX.Element {
@@ -17,39 +16,41 @@ export function Content({ }: IContentProps): JSX.Element {
   const [manhwaHistoryBackup, setManhwaHistoryBackup] = useState<ManhwaDataType[]>([]);
   const [search, setSearch] = useState('');
 
-  const manhwaHistorySearch = new FuzzySearch(manhwaHistoryBackup || [], ['title', 'date'], {
-    caseSensitive: false,
-  });
-
   useEffect(() => {
+    const getManhwaData = async () => {
+      let manhwaData = await manhwaApi.getManhwaHistorySaved();
 
-    const getData = async () => {
-      let data = await manhwaApi.getManhwaHistorySaved();
+      if (!manhwaData) return
 
-      if (!data)
-        return
+      setManhwaData(manhwaData);
 
-      setManhwaData(data);
-      setManhwaDataBackup(data);
+      setManhwaDataBackup(manhwaData);
 
-      const hdata = await manhwaApi.getManhwaHistory();
-      if (!data)
-        return
-      setManhwaHistory(hdata);
-      setManhwaHistoryBackup(hdata);
-      await userApi.setStats(data.length, hdata.length);
+      const historyData = await manhwaApi.getManhwaHistory();
+
+      if (!historyData) return
+
+      setManhwaHistory(historyData);
+
+      setManhwaHistoryBackup(historyData);
+
+      await userApi.setStats(historyData.length, historyData.length);
     }
-    getData();
+
+    getManhwaData();
   }, []);
 
   const removeFromDOM = (item: object) => {
     var data = manhwaData.filter((val) => {
       return val !== item ? val : null;
     })
+
     setManhwaData(data);
+
     data = manhwaDataBackup.filter((val) => {
       return val !== item ? val : null;
     })
+
     setManhwaDataBackup(data);
   }
 
@@ -61,11 +62,12 @@ export function Content({ }: IContentProps): JSX.Element {
             return (
               <Card
                 key={`${item.title}-manhwa-${idx}`}
-                action={async () => {
+                onDelete={async () => {
                   await manhwaApi.removeManhwa(item, await userApi.getUser()).then(() => {
                     removeFromDOM(item);
                   })
                 }}
+                date={item.date}
                 id={item.id}
                 lastChapter={item.chapter}
                 chapterUrl={item.title}
@@ -118,30 +120,40 @@ export function Content({ }: IContentProps): JSX.Element {
 
   const searchItem = (value: string): void => {
     setSearch(value);
-    if (tab == 1)
-      setManhwaHistory(manhwaHistorySearch.search(value));
-    else {
+    if (tab == 1) {
+      if (value === '') {
+        setManhwaHistory(manhwaHistoryBackup);
+        return;
+      }
+
+      setManhwaHistory(manhwaHistoryBackup.filter(item => item.name.toUpperCase().indexOf(value.toUpperCase()) > -1));
+    } else {
       if (value === '') {
         setManhwaData(manhwaDataBackup);
         return;
       }
 
-      setManhwaData(manhwaData.filter(item => item.name.toUpperCase().indexOf(value.toUpperCase()) > -1));
+      setManhwaData(manhwaDataBackup.filter(item => item.name.toUpperCase().indexOf(value.toUpperCase()) > -1));
     }
   }
 
-  return <Wrapper>
-    <SearchInput value={search} onChange={(event) => {
-      searchItem(event.target.value)
-    }} />
-    <ButtonContainer>
-      <Button callback={() => setTab(1)} text="Manhwa History" />
-      <Button callback={() => setTab(0)} text="Manhwa List" />
-    </ButtonContainer>
-    <CardsContainer card={tab === 0}>
-      {
-        tab === 0 ? listCard() : listHistory()
-      }
-    </CardsContainer>
-  </Wrapper>
+  return (
+    <Wrapper>
+      <SearchInput value={search} onChange={(event) => {
+        searchItem(event.target.value)
+      }} />
+
+      <ButtonContainer>
+        <Button isActive={tab === 1} callback={() => setTab(1)}>Manhwa History</Button>
+
+        <Button isActive={tab === 0} callback={() => setTab(0)}>Manhwa List</Button>
+      </ButtonContainer>
+
+      <ContentContainer isCard={tab === 0}>
+        {
+          tab === 0 ? listCard() : listHistory()
+        }
+      </ContentContainer>
+    </Wrapper>
+  )
 }

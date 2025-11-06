@@ -22,23 +22,25 @@ export function Sidebar({ }: ISidebarProps): JSX.Element {
     <Logo src={manhwaLogo} />
     <ButtonContainer>
       {/* <Button link="https://reaperscans.com" text="Reaper Scans" /> */}
-      <Button link="https://asuracomic.net" text="Asura Scans" />
-      <Button link="https://nightsup.net/" text="Night Scans" />
+      <Button link="https://asuracomic.net">Asura Scans</Button>
+      <Button link="https://nightsup.net/">Night Scans</Button>
       {/* <Button link="https://readm.org" text="Readm" /> */}
-      <Button link="https://manhwaclan.com" text="Manhwa Clan" />
-      <Button link="https://mangagalaxy.me/" text="Manga Galaxy" />
+      <Button link="https://manhwaclan.com" >Manhwa Clan</Button>
+      {/* <Button link="https://mangagalaxy.me/" text="Manga Galaxy" /> */}
       {/* <Button link="https://mangasee123.com/" text="Manga See" /> */}
-      <Button text="Open All" callback={() => {
-        [ 'https://asuracomic.net', 'https://manhwaclan.com', 'https://mangagalaxy.me/', 'https://nightsup.net/'].map((item) => {
+      <Button isActive callback={() => {
+        [ 'https://asuracomic.net', 'https://manhwaclan.com', 'https://nightsup.net/'].map((item) => {
           window.open(item);
         })
-      }}  />
+      }}>Open All</Button>
     </ButtonContainer>
+
     <StatsContainer>
       <StatsItem>
         <StatsText>Manhwa List</StatsText>
         <StatsText>{stats.manhwaCount}</StatsText>
       </StatsItem>
+
       <StatsItem>
         <StatsText>History List</StatsText>
         <StatsText>{stats.historyCount}</StatsText>

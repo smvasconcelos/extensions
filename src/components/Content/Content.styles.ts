@@ -13,13 +13,34 @@ export const ButtonContainer = styled.div`
   ${tw`justify-center flex flex-row gap-3 mb-10`}
 `
 
-export const CardsContainer = styled.div<{ card: boolean }>`
+export const ContentContainer = styled.div<{ isCard: boolean }>`
   grid-template-columns: repeat(auto-fit, minmax(210px, max-content));
-  ${({ card }) => !card && css`max-height: 60vh;`}
-  ${({ card }) => card ? tw`[grid-gap: 16px] justify-center p-0 grid` : tw`flex flex-col gap-2 overflow-auto p-2`}
+
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    ${tw` bg-sidebar`}
+    border-radius: 6px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    ${tw` bg-highlight`}
+    border-radius: 6px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #666;
+  }
+
+  ${({ isCard }) => !isCard && css`max-height: 60vh;`}
+
+  ${({ isCard }) => isCard ? tw`[grid-gap: 16px] justify-center p-0 grid` : tw`flex flex-col gap-2 overflow-auto p-2`}
 `
 
 export const SearchInput = styled.input`
-  ${tw`shadow appearance-none bg-searchbar  rounded w-full py-2 px-3 text-highlight mb-3 leading-tight focus:shadow-highlight`}
+  ${tw`shadow appearance-none bg-searchbar rounded w-full py-2 px-3 text-highlight mb-3`}
   color: black;
+  outline: none;
 `

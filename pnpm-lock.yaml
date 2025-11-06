@@ -9,92 +9,92 @@ importers:
   .:
     dependencies:
       '@emotion/react':
-        specifier: ^11.10.5
+        specifier: ^11.14.0
         version: 11.14.0(@types/react@18.3.26)(react@18.3.1)
       '@emotion/styled':
-        specifier: ^11.10.5
+        specifier: ^11.14.1
         version: 11.14.1(@emotion/react@11.14.0(@types/react@18.3.26)(react@18.3.1))(@types/react@18.3.26)(react@18.3.1)
       axios:
-        specifier: ^1.2.1
+        specifier: ^1.13.2
         version: 1.13.2
       fuzzy-search:
         specifier: ^3.2.1
         version: 3.2.1
       jquery:
-        specifier: ^3.6.3
+        specifier: ^3.7.1
         version: 3.7.1
       react:
-        specifier: ^18.2.0
+        specifier: ^18.3.1
         version: 18.3.1
       react-dom:
-        specifier: ^18.2.0
+        specifier: ^18.3.1
         version: 18.3.1(react@18.3.1)
       react-loader-spinner:
-        specifier: ^5.3.4
-        version: 5.5.0(@babel/core@7.28.5)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        specifier: ^5.4.5
+        version: 5.4.5(@babel/core@7.28.5)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       react-new-window:
         specifier: ^1.0.1
         version: 1.0.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       react-router-dom:
-        specifier: '6'
+        specifier: ^6.30.1
         version: 6.30.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       styled-components:
-        specifier: ^5.3.6
+        specifier: ^5.3.11
         version: 5.3.11(@babel/core@7.28.5)(react-dom@18.3.1(react@18.3.1))(react-is@18.3.1)(react@18.3.1)
       vite-tsconfig-paths:
-        specifier: ^4.0.3
+        specifier: ^4.3.2
         version: 4.3.2(typescript@4.9.5)(vite@4.5.14)
       yarn:
-        specifier: ^1.22.19
+        specifier: ^1.22.22
         version: 1.22.22
     devDependencies:
       '@types/chrome':
         specifier: ^0.0.206
         version: 0.0.206
       '@types/fuzzy-search':
-        specifier: ^2.1.2
+        specifier: ^2.1.5
         version: 2.1.5
       '@types/jquery':
-        specifier: ^3.5.14
+        specifier: ^3.5.33
         version: 3.5.33
       '@types/react':
-        specifier: ^18.0.26
+        specifier: ^18.3.26
         version: 18.3.26
       '@types/react-dom':
-        specifier: ^18.0.9
+        specifier: ^18.3.7
         version: 18.3.7(@types/react@18.3.26)
       '@types/react-router-dom':
         specifier: ^5.3.3
         version: 5.3.3
       '@types/styled-components':
-        specifier: ^5.1.26
+        specifier: ^5.1.35
         version: 5.1.35
       '@vitejs/plugin-react':
-        specifier: ^3.0.0
+        specifier: ^3.1.0
         version: 3.1.0(vite@4.5.14)
       autoprefixer:
-        specifier: ^10.4.13
+        specifier: ^10.4.21
         version: 10.4.21(postcss@8.5.6)
       babel-plugin-macros:
         specifier: ^3.1.0
         version: 3.1.0
       babel-plugin-styled-components:
-        specifier: ^2.0.7
+        specifier: ^2.1.4
         version: 2.1.4(@babel/core@7.28.5)(styled-components@5.3.11(@babel/core@7.28.5)(react-dom@18.3.1(react@18.3.1))(react-is@18.3.1)(react@18.3.1))(supports-color@5.5.0)
       postcss:
-        specifier: ^8.4.20
+        specifier: ^8.5.6
         version: 8.5.6
       tailwindcss:
-        specifier: ^3.2.4
+        specifier: ^3.4.18
         version: 3.4.18
       twin.macro:
-        specifier: ^3.1.0
+        specifier: ^3.4.1
         version: 3.4.1(tailwindcss@3.4.18)
       typescript:
-        specifier: ^4.9.3
+        specifier: ^4.9.5
         version: 4.9.5
       vite:
-        specifier: ^4.0.0
+        specifier: ^4.5.14
         version: 4.5.14
 
 packages:
@@ -1054,9 +1054,8 @@ packages:
   react-is@18.3.1:
     resolution: {integrity: sha512-/LLMVyas0ljjAtoYiPqYiL8VWXzUUdThrmU5+n20DZv+a+ClRoevUzw5JxU+Ieh5/c87ytoTBV9G1FiKfNJdmg==}
 
-  react-loader-spinner@5.5.0:
-    resolution: {integrity: sha512-3y+l6RPbkfW8EMs/X7MtfiPlAPwYp+WbCtls3gZn+fDJCt0SW4TakRoj2/lExbCVxSxA6Y5M8Nly+WfhNxnFcw==}
-    deprecated: Breaking changes was include so major version was use
+  react-loader-spinner@5.4.5:
+    resolution: {integrity: sha512-32f+sb/v2tnNfyvnCCOS4fpyVHsGXjSyNo6QLniHcaj1XjKLxx14L2z0h6szRugOL8IEJ+53GPwNAdbkDqmy4g==}
     peerDependencies:
       react: ^16.0.0 || ^17.0.0 || ^18.0.0
       react-dom: ^16.0.0 || ^17.0.0 || ^18.0.0
@@ -2222,7 +2221,7 @@ snapshots:
 
   react-is@18.3.1: {}
 
-  react-loader-spinner@5.5.0(@babel/core@7.28.5)(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
+  react-loader-spinner@5.4.5(@babel/core@7.28.5)(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)

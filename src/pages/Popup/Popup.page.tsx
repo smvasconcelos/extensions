@@ -50,14 +50,15 @@ export function PopupPage(): JSX.Element {
         setEmail(event.target.value);
       }} />
     {
-      user === '' ? <ButtonContainer><Button text="Set Key" callback={openHome} /></ButtonContainer> : <ButtonContainer>
-        <Button text="Reset Key" callback={() => {
+      user === '' ? <ButtonContainer>
+        <Button callback={openHome}>Set Key</Button></ButtonContainer> : <ButtonContainer>
+        <Button callback={() => {
           userApi.resetUser();
           if (AMBIENT == 'DEV') return
           window.close();
-        }} />
+        }}>Reset Key</Button>
 
-        <Button text="Open Collection" callback={() => window.open(homeHref, '_blank')} />
+        <Button callback={() => window.open(homeHref, '_blank')}>Open Collection</Button>
       </ButtonContainer>
     }
   </Wrapper>

@@ -1,3 +1,4 @@
+import { css } from "styled-components";
 import tw, { styled } from "twin.macro";
 
 export const CardTitle = styled.p`
@@ -28,15 +29,29 @@ export const CardButtonContainer = styled.div`
   ${tw`flex flex-col gap-2`}
 `
 
-export const Wrapper = styled.div`
+export const Wrapper = styled.div<{alwaysActive?:boolean}>`
   display: flex;
   flex-direction: row;
   box-sizing: border-box;
   width: fit-content;
   height: auto;
   transition: all 200ms ease-in-out;
+
   &:hover div{
     opacity: 1;
   }
+
+  span {
+    ${tw`text-highlight`}
+    margin: 0 auto;
+    font-size: 12px;
+  }
+
   ${tw`bg-card rounded relative`}
+
+  ${({ alwaysActive }) => alwaysActive && css`
+    div {
+      opacity: 1;
+    }
+  `}
 `
